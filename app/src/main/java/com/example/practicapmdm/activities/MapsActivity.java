@@ -1,14 +1,16 @@
-package com.example.practicapmdm;
+package com.example.practicapmdm.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class InitHomeActivity extends AppCompatActivity {
+import com.example.practicapmdm.R;
+
+public class MapsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_init_home);
+        setContentView(R.layout.activity_maps);
     }
 }
