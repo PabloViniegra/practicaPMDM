@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/nav_item_one"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="@string/nav_item_one"/>
+        <item
+            android:id="@+id/nav_item_two"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="@string/nav_item_two"/>
+        <item
+            android:id="@+id/nav_item_three"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="@string/nav_item_three"/>
+    </group>
+    <group android:id="@+id/group_menu">
+        <item android:id="@+id/nav_item_four"
+            android:title="@string/nav_item_four"/>
+        <item android:id="@+id/nav_item_five"
+            android:title="@string/nav_item_five"/>
+    </group>
+</menu>
