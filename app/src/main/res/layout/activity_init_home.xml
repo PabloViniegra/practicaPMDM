@@ -7,12 +7,25 @@
     tools:context=".activities.InitHomeActivity"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    android:orientation="vertical">
 
-    <include
-        layout="@layout/app_bar_main"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include
+                layout="@layout/app_bar_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
