@@ -1,13 +1,13 @@
 package com.example.practicapmdm.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-<<<<<<< HEAD
-=======
 import android.view.View;
 import android.widget.Toast;
->>>>>>> 232de159534f89a0ce1ded5d5afff5d5416ea41a
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,12 +16,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.practicapmdm.R;
 import com.google.android.material.navigation.NavigationView;
 
-public class InitHomeActivity extends AppCompatActivity {
+public class InitHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout drawerLayout;
+    public final String TAG = getClass().getName();
     public static final String TITLE_KEY = "TITLE_KEY";
     public static final String TITLE = "My location";
     public static final String DESCRIPTION_KEY = "DESCRIPTION_KEY";
     public static final String DESCRIPTION = "This is my location";
+    public double latitude;
+    public double longitude;
+    public String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class InitHomeActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.btn_moreinfo);
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                                                                         drawerLayout,
@@ -64,5 +69,33 @@ public class InitHomeActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.nav_item_one:
+                Intent intentMaps = new Intent(InitHomeActivity.this, MapsActivity.class);
+                break;
+            case R.id.nav_item_two:
+                break;
+            case R.id.nav_item_three:
+                break;
+            case R.id.nav_item_four:
+                break;
+            case R.id.nav_item_five:
+                break;
+            default:
+                Log.d(TAG, "No he entrado por el onNavigationGetItemSelected");
+                break;
+
+        }
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
