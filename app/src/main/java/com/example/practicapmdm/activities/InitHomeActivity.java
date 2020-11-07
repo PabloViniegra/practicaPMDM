@@ -16,6 +16,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.practicapmdm.R;
 import com.google.android.material.navigation.NavigationView;
 
+import static com.example.practicapmdm.constants.Constants.LATITUDE;
+import static com.example.practicapmdm.constants.Constants.LONGITUDE;
+import static com.example.practicapmdm.constants.Constants.NAME;
+
 public class InitHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout drawerLayout;
     public final String TAG = getClass().getName();
@@ -59,6 +63,11 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                 Toast.makeText(InitHomeActivity.this, "click", Toast.LENGTH_SHORT).show();
             }
         });
+
+        Intent getIntent = getIntent();
+        double latitude = getIntent.getDoubleExtra(LATITUDE, 0);
+        double longitude = getIntent.getDoubleExtra(LONGITUDE, 0);
+        String name = getIntent.getStringExtra(NAME);
     }
 
     @Override
@@ -77,6 +86,10 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         switch (menuItem.getItemId()) {
             case R.id.nav_item_one:
                 Intent intentMaps = new Intent(InitHomeActivity.this, MapsActivity.class);
+                intentMaps.putExtra(LATITUDE, latitude);
+                intentMaps.putExtra(LONGITUDE, longitude);
+                intentMaps.putExtra(NAME, name);
+                startActivity(intentMaps);
                 break;
             case R.id.nav_item_two:
                 break;
