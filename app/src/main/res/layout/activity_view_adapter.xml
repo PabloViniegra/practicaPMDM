@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MapsActivity">
-    
-    <org.osmdroid.views.MapView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/openStreetMap"/>
+    tools:context=".activities.ActivityViewAdapter">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/myListView"
+        android:dividerHeight="7dp"/>
 
 </LinearLayout>

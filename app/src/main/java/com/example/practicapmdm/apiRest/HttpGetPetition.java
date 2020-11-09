@@ -49,7 +49,7 @@ public class HttpGetPetition {
                     break;
 
             }
-
+            request.disconnect();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -59,6 +59,11 @@ public class MapsActivity extends AppCompatActivity {
     }
 
     public void generateOpenMaps () {
-
+        mMap = findViewById(R.id.openStreetMap);
+        mMap.setBuiltInZoomControls(true);
+        mMap.setMultiTouchControls(true);
+        mapController = (MapController) mMap.getController();
+        mapController.setZoom(18);
+        mapController.setCenter(geoMyPosition);
     }
 }
