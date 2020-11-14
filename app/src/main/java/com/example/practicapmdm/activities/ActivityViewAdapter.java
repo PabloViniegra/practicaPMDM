@@ -10,8 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.practicapmdm.R;
-import com.example.practicapmdm.activities.MapsActivity;
-import com.example.practicapmdm.apiRest.HttpGetPetition;
+import com.example.practicapmdm.domain.JsonResponse;
 import com.example.practicapmdm.impl.ViewAdapter;
 import com.example.practicapmdm.models.Pool;
 
@@ -56,15 +55,15 @@ public class ActivityViewAdapter extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            HttpGetPetition httpGetPetition = new HttpGetPetition();
-            pools = httpGetPetition.getHttpLocationsPetition();
+            JsonResponse json = new JsonResponse();
+            pools = json.results;
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            mViewAdapter = new ViewAdapter(ActivityViewAdapter.this, R.layout.activity_view_adapter, pools);
+            mViewAdapter = new ViewAdapter(ActivityViewAdapter.this, pools);
             mViewList.setAdapter(mViewAdapter);
             mViewAdapter.notifyDataSetChanged();
         }

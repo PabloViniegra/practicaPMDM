@@ -11,6 +11,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="gps_granted">Permiso GPS concedido</string>
+    <string name="gps_denied">Permiso GPS denegado</string>
 
     <!--Menu Options -->
     <string name="nav_item_one">Ubicación actual</string>

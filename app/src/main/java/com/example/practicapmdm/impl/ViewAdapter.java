@@ -22,13 +22,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ViewAdapter extends BaseAdapter {
     private Context mcontext;
-    private int layout;
     private List<Pool> mPools;
 
     @Builder
-    public ViewAdapter(Context mcontext, int layout, List<Pool> mPools) {
+    public ViewAdapter(Context mcontext, List<Pool> mPools) {
         this.mcontext = mcontext;
-        this.layout = layout;
         this.mPools = mPools;
     }
 
@@ -51,12 +49,10 @@ public class ViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) mcontext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView =layoutInflater.inflate(R.layout.mylist, null);
+            convertView =layoutInflater.inflate(R.layout.views_of_pools, null);
         }
 
-        ImageView imageView = convertView.findViewById(R.id.imgViewList);
-        TextView textView = convertView.findViewById(R.id.txtViewList);
-        imageView.setImageResource(R.drawable.moreinfo_arrow_pressed);
+        TextView textView = convertView.findViewById(R.id.txtPoolName);
         textView.setText(mPools.get(position).getName());
         return null;
     }
