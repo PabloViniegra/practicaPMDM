@@ -22,6 +22,7 @@ import static com.example.practicapmdm.activities.InitHomeActivity.DESCRIPTION_K
 import static com.example.practicapmdm.activities.InitHomeActivity.TITLE_KEY;
 import static com.example.practicapmdm.constants.Constants.LATITUDE;
 import static com.example.practicapmdm.constants.Constants.LONGITUDE;
+import static com.example.practicapmdm.constants.Constants.NAME;
 
 public class MapsActivity extends AppCompatActivity {
     private MapView mMap;
