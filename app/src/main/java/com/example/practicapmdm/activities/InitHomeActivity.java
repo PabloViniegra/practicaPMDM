@@ -61,6 +61,9 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     private List<Pool> mPools;
     private ListView mListView = null;
     private ViewAdapter mViewAdapter = null;
+    public Double latitudReceive = null;
+    public Double longitudReceive = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,17 +85,20 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
             ActivityCompat.requestPermissions(InitHomeActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
+            Log.d(TAG, "Empezando el servicio");
             startService();
         }
 
 
-        /*Intent getIntent = getIntent();
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(INTENT_LOCALIZATION_ACTION));
+        Intent getIntent = getIntent();
         final double latitudeReceive = getIntent.getDoubleExtra(LATITUDE, 0);
         final double longitudeReceive = getIntent.getDoubleExtra(LONGITUDE, 0);
-        String nameReceive = getIntent.getStringExtra(NAME);*/
+        String nameReceive = getIntent.getStringExtra(NAME);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(INTENT_LOCALIZATION_ACTION));
 
+        Log.d(TAG, "Latitude " + String.valueOf(latitudeReceive));
+        Log.d(TAG, "Longitude " + String.valueOf(longitudeReceive));
     }
 
     private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
@@ -223,7 +229,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiLocationMadridData mApi = retrofit.create(ApiLocationMadridData.class);
-        mApi.getPools(latitude, longitude, Constants.DISTANCE).enqueue(new Callback<JsonResponse>() {
+        mApi.getPools(latitudReceive, longitudReceive, Constants.DISTANCE).enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 if (response != null && response.body() != null) {
@@ -233,8 +239,8 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                     mViewAdapter.notifyDataSetChanged();
                     for (Pool mPool : mPools) {
                         Log.d(TAG, mPool.getName() == null ? "" : mPool.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
-                        Log.d(TAG, String.valueOf(mPool.getLatitude() == 0 ? "" : mPool.getLatitude()));
-                        Log.d(TAG, String.valueOf(mPool.getLongitude() == 0 ? "" : mPool.getLongitude()));
+                        Log.d(TAG, String.valueOf(mPool.getLocation().getLatitude()==0 ? "" : mPool.getLocation().getLatitude()));
+                        Log.d(TAG, String.valueOf(mPool.getLocation().getLongitude() == 0 ? "" : mPool.getLocation().getLongitude()));
                     }
                 }
             }

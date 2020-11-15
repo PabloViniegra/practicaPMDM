@@ -40,8 +40,8 @@ public class ActivityViewAdapter extends AppCompatActivity {
                 Intent locationSchoolIntent = new Intent(getApplicationContext(),MapsActivity.class);
                 locationSchoolIntent.putExtra(NAME,pools.get(i).getName());
                 locationSchoolIntent.putExtra(DESCRIPTION_KEY,DESCRIPTION);
-                locationSchoolIntent.putExtra(LATITUDE,pools.get(i).getLatitude());
-                locationSchoolIntent.putExtra(LONGITUDE,pools.get(i).getLongitude());
+                locationSchoolIntent.putExtra(LATITUDE,pools.get(i).getLocation().getLatitude());
+                locationSchoolIntent.putExtra(LONGITUDE,pools.get(i).getLocation().getLongitude());
                 startActivity(locationSchoolIntent);
             }
         });

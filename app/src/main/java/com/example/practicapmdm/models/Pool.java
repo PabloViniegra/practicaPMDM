@@ -7,17 +7,13 @@ public class Pool {
     @SerializedName("title")
     @Expose
     private String name;
-    @SerializedName("latitude")
+    @SerializedName("location")
     @Expose
-    private double latitude;
-    @SerializedName("longitude")
-    @Expose
-    private double longitude;
+    private Location location;
 
-    public Pool (String name, double latitude, double longitude) {
+    public Pool (String name, Location location) {
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.location = location;
     }
 
     public String getName() {
@@ -28,19 +24,11 @@ public class Pool {
         this.name = name;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

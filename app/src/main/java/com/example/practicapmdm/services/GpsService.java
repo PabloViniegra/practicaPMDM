@@ -10,6 +10,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.util.Log;
+
+import static android.content.ContentValues.TAG;
 import static com.example.practicapmdm.constants.Constants.INTENT_LOCALIZATION_ACTION;
 import static com.example.practicapmdm.constants.Constants.LATITUDE;
 import static com.example.practicapmdm.constants.Constants.LONGITUDE;
@@ -37,6 +40,8 @@ public class GpsService extends Service implements LocationListener {
         Intent intent = new Intent(INTENT_LOCALIZATION_ACTION);
         intent.putExtra(LATITUDE, latitude);
         intent.putExtra(LONGITUDE, longitude);
+        Log.d(TAG, "GpsService latitude: " + String.valueOf(latitude));
+        Log.d(TAG, "GpsService longitude: " + String.valueOf(longitude));
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
@@ -55,8 +60,10 @@ public class GpsService extends Service implements LocationListener {
             callGPS.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(callGPS);
         } else {
-            mLocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 100, this);
+            mLocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 10, this);
         }
+
+
     }
 
     @Override
