@@ -52,8 +52,8 @@ public class ViewAdapter extends BaseAdapter {
             convertView =layoutInflater.inflate(R.layout.views_of_pools, null);
         }
 
-        TextView textView = convertView.findViewById(R.id.txtPoolName);
+        TextView textView = convertView.findViewById(R.id.txtPool);
         textView.setText(mPools.get(position).getName());
-        return null;
+        return convertView;
     }
 }

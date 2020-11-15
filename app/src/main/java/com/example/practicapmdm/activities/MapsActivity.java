@@ -1,10 +1,10 @@
 package com.example.practicapmdm.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.practicapmdm.R;
 
@@ -18,12 +18,10 @@ import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
 
-import static com.example.practicapmdm.constants.Constants.LONGITUDE;
-import static com.example.practicapmdm.constants.Constants.LATITUDE;
-import static com.example.practicapmdm.activities.InitHomeActivity.TITLE_KEY;
-import static com.example.practicapmdm.activities.InitHomeActivity.TITLE;
 import static com.example.practicapmdm.activities.InitHomeActivity.DESCRIPTION_KEY;
-import static com.example.practicapmdm.activities.InitHomeActivity.DESCRIPTION;
+import static com.example.practicapmdm.activities.InitHomeActivity.TITLE_KEY;
+import static com.example.practicapmdm.constants.Constants.LATITUDE;
+import static com.example.practicapmdm.constants.Constants.LONGITUDE;
 
 public class MapsActivity extends AppCompatActivity {
     private MapView mMap;

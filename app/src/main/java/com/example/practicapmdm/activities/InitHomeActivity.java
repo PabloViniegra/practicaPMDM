@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +33,6 @@ import com.example.practicapmdm.services.GpsService;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -67,28 +65,25 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init_home);
-
+        Toolbar toolbar = null;
         mListView = findViewById(R.id.listPools);
-        setToolbar();
+        setToolbar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
 
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
+            navigationView.setNavigationItemSelectedListener(this);
         }
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
         if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(InitHomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(InitHomeActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
             startService();
         }
-
-        /*MenuItem menuItem = navigationView.getMenu().getItem(0);
-        menuItem.setChecked(true);*/
-
-
-
 
 
         /*Intent getIntent = getIntent();
@@ -129,8 +124,8 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
             }
         }
     }
-    private void setToolbar(){
-        Toolbar toolbar = findViewById(R.id.toolbar_main);
+    private void setToolbar(Toolbar toolbar){
+        toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.btn_moreinfo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -237,9 +232,9 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                     mListView.setAdapter(mViewAdapter);
                     mViewAdapter.notifyDataSetChanged();
                     for (Pool mPool : mPools) {
-                        Log.d(TAG, mPool.getName());
-                        Log.d(TAG, String.valueOf(mPool.getLatitude()));
-                        Log.d(TAG, String.valueOf(mPool.getLongitude()));
+                        Log.d(TAG, mPool.getName() == null ? "" : mPool.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
+                        Log.d(TAG, String.valueOf(mPool.getLatitude() == 0 ? "" : mPool.getLatitude()));
+                        Log.d(TAG, String.valueOf(mPool.getLongitude() == 0 ? "" : mPool.getLongitude()));
                     }
                 }
             }
