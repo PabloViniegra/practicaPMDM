@@ -16,11 +16,16 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/piscina"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:theme="@style/AppTheme">
         <activity android:name=".activities.ActivityViewAdapter"></activity>
+        <service android:name=".services.GpsService"
+            android:enabled="true"
+            android:exported="true"/>
         <activity android:name=".activities.MapsActivity" />
         <activity android:name=".activities.InitHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
+
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

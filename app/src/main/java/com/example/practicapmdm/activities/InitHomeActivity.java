@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -33,6 +32,7 @@ import com.example.practicapmdm.services.GpsService;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -68,19 +68,19 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init_home);
-        Toolbar toolbar = null;
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.btn_moreinfo);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mListView = findViewById(R.id.listPools);
-        setToolbar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
 
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.navview);
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+
         if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(InitHomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(InitHomeActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -109,15 +109,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         }
     };
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -130,12 +122,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
             }
         }
     }
-    private void setToolbar(Toolbar toolbar){
-        toolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.btn_moreinfo);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
@@ -175,10 +162,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         return false;
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
-    }
 
     public void loading() {
         int i = 100;

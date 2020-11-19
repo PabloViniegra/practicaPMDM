@@ -1,37 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.InitHomeActivity"
-    android:id="@+id/drawer_layout"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start"
     android:orientation="vertical">
 
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <include
-                layout="@layout/app_bar_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-
-        </LinearLayout>
-
-
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/nav_view"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
 
     <ListView
         android:layout_width="match_parent"
@@ -40,4 +15,4 @@
         android:layout_gravity="center"
         android:dividerHeight="7dp"/>
 
-</androidx.drawerlayout.widget.DrawerLayout>
+</LinearLayout>
