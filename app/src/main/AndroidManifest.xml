@@ -22,7 +22,7 @@
             android:exported="true"/>
         <activity android:name=".activities.MapsActivity" />
         <activity android:name=".activities.InitHomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            android:theme="@style/AppTheme">
 
 
 

@@ -68,9 +68,9 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_init_home);
+        setContentView(R.layout.app_bar_main);
         setToolbar();
-        mListView = findViewById(R.id.listPools);
+        mListView = findViewById(R.id.myListView);
         drawerLayout = findViewById(R.id.drawer_layout);
 
 
@@ -90,8 +90,8 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
 
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(INTENT_LOCALIZATION_ACTION));
         Intent getIntent = getIntent();
-        final double latitudeReceive = getIntent.getDoubleExtra(LATITUDE, 0);
-        final double longitudeReceive = getIntent.getDoubleExtra(LONGITUDE, 0);
+        double latitudeReceive = getIntent.getDoubleExtra(LATITUDE, 0);
+        double longitudeReceive = getIntent.getDoubleExtra(LONGITUDE, 0);
         String nameReceive = getIntent.getStringExtra(NAME);
 
 
@@ -180,19 +180,21 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiLocationMadridData mApi = retrofit.create(ApiLocationMadridData.class);
-        mApi.getPools(latitudReceive, longitudReceive, Constants.DISTANCE).enqueue(new Callback<JsonResponse>() {
+        Log.d(TAG, "Parametros de entrada: " + latitude + " " + longitude + " " + Constants.DISTANCE);
+        mApi.getPools(latitude, longitude, Constants.DISTANCE).enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 if (response != null && response.body() != null) {
                     mPools = response.body().results;
-                    mViewAdapter = new ViewAdapter(InitHomeActivity.this, mPools);
+                    /*mViewAdapter = new ViewAdapter(InitHomeActivity.this, mPools);
                     mListView.setAdapter(mViewAdapter);
-                    mViewAdapter.notifyDataSetChanged();
+                    mViewAdapter.notifyDataSetChanged();*/
                     for (Pool mPool : mPools) {
                         Log.d(TAG, mPool.getName() == null ? "" : mPool.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
                         Log.d(TAG, String.valueOf(mPool.getLocation().getLatitude()==0 ? "" : mPool.getLocation().getLatitude()));
                         Log.d(TAG, String.valueOf(mPool.getLocation().getLongitude() == 0 ? "" : mPool.getLocation().getLongitude()));
                     }
+                    Log.d(TAG, "Parametros de salida: " + latitude + " " + longitude + " " + Constants.DISTANCE);
                 }
             }
 

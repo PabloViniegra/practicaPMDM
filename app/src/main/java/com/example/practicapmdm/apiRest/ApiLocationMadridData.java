@@ -9,7 +9,7 @@ import com.example.practicapmdm.constants.Constants;
 import com.example.practicapmdm.domain.JsonResponse;
 
 public interface ApiLocationMadridData {
-    @Headers({"Accept: application/json' 'https://datos.madrid.es/egob/catalogo/210227-0-piscinas-publicas.json"})
+    @Headers({"Accept: application/json"})
     @GET(Constants.END_POINT )
-    Call <JsonResponse> getPools(@Query("latitude") Double latitude, @Query("longitude") Double longitude, @Query("distance") int distance);
+    Call <JsonResponse> getPools(@Query("latitud") Double latitude, @Query("longitud") Double longitude, @Query("distancia") int distance);
 }
