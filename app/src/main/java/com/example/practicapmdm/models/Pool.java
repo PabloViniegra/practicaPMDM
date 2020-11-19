@@ -3,7 +3,9 @@ package com.example.practicapmdm.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Pool {
+import java.io.Serializable;
+
+public class Pool implements Serializable {
     @SerializedName("title")
     @Expose
     private String name;

@@ -14,6 +14,7 @@ import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
@@ -40,6 +41,10 @@ public class MapsActivity extends AppCompatActivity {
         geoMyPosition = new GeoPoint(getDataIntent.getDoubleExtra(LATITUDE, 0), getDataIntent.getDoubleExtra(LONGITUDE, 0));
         generateOpenMaps();
 
+        Marker startMarker = new Marker(mMap);
+        Marker myPosition = new Marker(mMap);
+        startMarker.setPosition(geoMyPosition);
+        myPosition.setPosition(new GeoPoint(getDataIntent.getDoubleExtra(LATITUDE,0),getDataIntent.getDoubleExtra(LONGITUDE,0)));
         boolean add = overlayItems.add(new OverlayItem(getDataIntent.getStringExtra(TITLE_KEY), getDataIntent.getStringExtra(DESCRIPTION_KEY),geoMyPosition));
         ItemizedOverlayWithFocus<OverlayItem> mOverLay = new ItemizedOverlayWithFocus<OverlayItem>(overlayItems, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override

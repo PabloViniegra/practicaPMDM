@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -68,10 +69,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.btn_moreinfo);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
         mListView = findViewById(R.id.listPools);
         drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -99,6 +97,13 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
 
         Log.d(TAG, "Latitude " + String.valueOf(latitudeReceive));
         Log.d(TAG, "Longitude " + String.valueOf(longitudeReceive));
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.btn_moreinfo);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
@@ -163,44 +168,6 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     }
 
 
-
-    public void loading() {
-        int i = 100;
-        final int[] n = {0};
-        Random r = new Random();
-        int random = r.nextInt(1);
-        final TextView percent = null;
-        final int[] opcion_0 = {1, 20, 40, 60, 89, 100};
-        int[] opcion_1 = {1, 30, 60, 90, 99, 100};
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-
-        switch (random) {
-            case 0:
-                // con el métod submit() se envía la tarea que se hará en el nuevo hilo
-                // hará una pausa de un segundo ( al hilo secundario ) y actualizará
-                // el valor del elemento de la UI
-                executor.submit(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        for (int k = 0; k <= 5; k++) {
-                            String temp = String.valueOf(opcion_0[n[0]]);
-                            assert percent != null;
-                            percent.setText(temp);
-                            n[0]++;
-
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
-                break;
-
-        }
-    }
 
     public void startService () {
         Intent intentService = new Intent(getApplicationContext(), GpsService.class);
