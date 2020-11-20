@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,9 +29,11 @@ import com.example.practicapmdm.apiRest.ApiLocationMadridData;
 import com.example.practicapmdm.constants.Constants;
 import com.example.practicapmdm.domain.JsonResponse;
 import com.example.practicapmdm.impl.ViewAdapter;
+import com.example.practicapmdm.models.Location;
 import com.example.practicapmdm.models.Pool;
 import com.example.practicapmdm.services.GpsService;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.Objects;
@@ -150,8 +153,6 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                 intentMaps.putExtra(NAME, name);
                 startActivity(intentMaps);
                 break;
-            case R.id.nav_item_two:
-                break;
             case R.id.nav_item_three:
                 getPoolsNear();
                 break;
@@ -186,9 +187,6 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 if (response != null && response.body() != null) {
                     mPools = response.body().results;
-                    /*mViewAdapter = new ViewAdapter(InitHomeActivity.this, mPools);
-                    mListView.setAdapter(mViewAdapter);
-                    mViewAdapter.notifyDataSetChanged();*/
                     for (Pool mPool : mPools) {
                         Log.d(TAG, mPool.getName() == null ? "" : mPool.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
                         Log.d(TAG, String.valueOf(mPool.getLocation().getLatitude()==0 ? "" : mPool.getLocation().getLatitude()));
@@ -196,6 +194,9 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                     }
                     Log.d(TAG, "Parametros de salida: " + latitude + " " + longitude + " " + Constants.DISTANCE);
                 }
+                mViewAdapter = new ViewAdapter(InitHomeActivity.this, mPools);
+                mListView.setAdapter(mViewAdapter);
+                mViewAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -203,5 +204,17 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
 
             }
         });
+    }
+
+    private void sharedMyPreferences() {
+        SharedPreferences preferences = getSharedPreferences("SHARED",MODE_PRIVATE); //privado para que solo lo vea nuestra aplicación
+        SharedPreferences.Editor meditor = preferences.edit(); //Vamos a editar las preferencias que hemos instanciado.
+        meditor.putInt("KEY", 42);
+        meditor.commit();
+        //Para pasar un objeto
+        Gson gson = new Gson();
+        String data = gson.toJson(new Pool("piscina de tu tia", new Location(40.3432,-3.7890)));
+        //Para extraer el dato
+        int number = preferences.getInt("KEY",0);
     }
 }

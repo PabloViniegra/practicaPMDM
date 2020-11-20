@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +13,9 @@ import android.widget.ListView;
 import com.example.practicapmdm.R;
 import com.example.practicapmdm.domain.JsonResponse;
 import com.example.practicapmdm.impl.ViewAdapter;
+import com.example.practicapmdm.models.Location;
 import com.example.practicapmdm.models.Pool;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -67,5 +70,7 @@ public class ActivityViewAdapter extends AppCompatActivity {
             mViewList.setAdapter(mViewAdapter);
             mViewAdapter.notifyDataSetChanged();
         }
+
+
     }
 }

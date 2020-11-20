@@ -13,11 +13,6 @@
         android:text="Mostrar ubicación"
         android:gravity="center"/>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listPools"
-        android:layout_gravity="center"
-        android:dividerHeight="7dp"/>
+
 
 </LinearLayout>
