@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -35,6 +36,7 @@ import com.example.practicapmdm.services.GpsService;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -62,9 +64,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     public static Double latitude;
     public static Double longitude;
     public String name;
-    private List<Pool> mPools;
-    private ListView mListView = null;
-    private ViewAdapter mViewAdapter = null;
+    private ArrayList<Pool> mPools;
     public Double latitudReceive = null;
     public Double longitudReceive = null;
 
@@ -73,7 +73,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_main);
         setToolbar();
-        mListView = findViewById(R.id.myListView);
+
         drawerLayout = findViewById(R.id.drawer_layout);
 
 
@@ -186,7 +186,12 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 if (response != null && response.body() != null) {
-                    mPools = response.body().results;
+                    mPools = (ArrayList<Pool>) response.body().results;
+                    Intent sendPools = new Intent(getApplicationContext(), ActivityViewAdapter.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("LIST", mPools);
+                    sendPools.putExtras(bundle);
+                    startActivity(sendPools);
                     for (Pool mPool : mPools) {
                         Log.d(TAG, mPool.getName() == null ? "" : mPool.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
                         Log.d(TAG, String.valueOf(mPool.getLocation().getLatitude()==0 ? "" : mPool.getLocation().getLatitude()));
@@ -194,9 +199,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                     }
                     Log.d(TAG, "Parametros de salida: " + latitude + " " + longitude + " " + Constants.DISTANCE);
                 }
-                mViewAdapter = new ViewAdapter(InitHomeActivity.this, mPools);
-                mListView.setAdapter(mViewAdapter);
-                mViewAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -206,15 +209,4 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         });
     }
 
-    private void sharedMyPreferences() {
-        SharedPreferences preferences = getSharedPreferences("SHARED",MODE_PRIVATE); //privado para que solo lo vea nuestra aplicación
-        SharedPreferences.Editor meditor = preferences.edit(); //Vamos a editar las preferencias que hemos instanciado.
-        meditor.putInt("KEY", 42);
-        meditor.commit();
-        //Para pasar un objeto
-        Gson gson = new Gson();
-        String data = gson.toJson(new Pool("piscina de tu tia", new Location(40.3432,-3.7890)));
-        //Para extraer el dato
-        int number = preferences.getInt("KEY",0);
-    }
 }

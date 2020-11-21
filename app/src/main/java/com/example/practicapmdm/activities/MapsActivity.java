@@ -29,7 +29,8 @@ public class MapsActivity extends AppCompatActivity {
     private MapView mMap;
     private MapController mapController;
     GeoPoint geoMyPosition;
-    private ArrayList <OverlayItem> overlayItems = new ArrayList<>();
+    private String name;
+    private ArrayList<OverlayItem> overlayItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +40,11 @@ public class MapsActivity extends AppCompatActivity {
 
         Intent getDataIntent = getIntent();
         geoMyPosition = new GeoPoint(getDataIntent.getDoubleExtra(LATITUDE, 0), getDataIntent.getDoubleExtra(LONGITUDE, 0));
+        name = getDataIntent.getStringExtra("NAME");
         generateOpenMaps();
+        addMarker(geoMyPosition);
 
-        Marker startMarker = new Marker(mMap);
-        Marker myPosition = new Marker(mMap);
-        startMarker.setPosition(geoMyPosition);
-        myPosition.setPosition(new GeoPoint(getDataIntent.getDoubleExtra(LATITUDE,0),getDataIntent.getDoubleExtra(LONGITUDE,0)));
-        boolean add = overlayItems.add(new OverlayItem(getDataIntent.getStringExtra(TITLE_KEY), getDataIntent.getStringExtra(DESCRIPTION_KEY),geoMyPosition));
+        boolean add = overlayItems.add(new OverlayItem(getDataIntent.getStringExtra(TITLE_KEY), getDataIntent.getStringExtra(DESCRIPTION_KEY), geoMyPosition));
         ItemizedOverlayWithFocus<OverlayItem> mOverLay = new ItemizedOverlayWithFocus<OverlayItem>(overlayItems, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
             public boolean onItemSingleTapUp(int index, OverlayItem item) {
@@ -56,18 +55,29 @@ public class MapsActivity extends AppCompatActivity {
             public boolean onItemLongPress(int index, OverlayItem item) {
                 return false;
             }
-        },getApplicationContext());
+        }, getApplicationContext());
 
         mOverLay.setFocusItemsOnTap(true);
         mMap.getOverlays().add(mOverLay);
     }
 
-    public void generateOpenMaps () {
+    public void generateOpenMaps() {
         mMap = findViewById(R.id.openStreetMap);
         mMap.setBuiltInZoomControls(true);
         mMap.setMultiTouchControls(true);
         mapController = (MapController) mMap.getController();
         mapController.setZoom(18);
         mapController.setCenter(geoMyPosition);
+    }
+
+    public void addMarker (GeoPoint center){
+        Marker marker = new Marker(mMap);
+        marker.setPosition(center);
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        marker.setIcon(getResources().getDrawable(R.drawable.moreinfo_arrow));
+        mMap.getOverlays().clear();
+        mMap.getOverlays().add(marker);
+        mMap.invalidate();
+        marker.setTitle(name);
     }
 }
