@@ -1,6 +1,6 @@
 package com.example.practicapmdm.controllers;
 
-import com.example.practicapmdm.models.Favoritos;
+import com.example.practicapmdm.models.Favorites;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class fileControllers {
 
     public ArrayList fileReader(){
-        ArrayList<Favoritos> arrayFavoritos= new ArrayList();
+        ArrayList<Favorites> arrayFavoritos= new ArrayList();
         try {
             BufferedReader br = new BufferedReader(new FileReader("favorites.txt"));
             String linea;
@@ -27,7 +27,7 @@ public class fileControllers {
         }
 return arrayFavoritos;
     }
-    public void fileWriter(ArrayList <Favoritos> arrayFavoritos){
+    public void fileWriter(ArrayList <Favorites> arrayFavoritos){
         File file = new File("favorites.txt");
         try {
             FileWriter fw = new FileWriter(file);

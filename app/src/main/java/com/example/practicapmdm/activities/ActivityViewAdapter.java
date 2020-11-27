@@ -53,9 +53,11 @@ public class ActivityViewAdapter extends AppCompatActivity {
         }
 
         mViewList = findViewById(R.id.myListView);
+        Log.d(TAG, "Antes del evento click en el list view");
         mViewList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+                Log.d(TAG, "dentro del evento");
                 Toast.makeText(ActivityViewAdapter.this, "Click en el ListView", Toast.LENGTH_SHORT).show();
                 Intent locationSchoolIntent = new Intent(getApplicationContext(),MapsActivity.class);
                 locationSchoolIntent.putExtra(NAME,pools.get(i).getName());
@@ -65,8 +67,10 @@ public class ActivityViewAdapter extends AppCompatActivity {
                 startActivity(locationSchoolIntent);
             }
         });
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
+
+        mViewAdapter = new ViewAdapter(getApplicationContext(),pools);
+        mViewList.setAdapter(mViewAdapter);
+        mViewAdapter.notifyDataSetChanged();
 
         /*btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,23 +81,7 @@ public class ActivityViewAdapter extends AppCompatActivity {
 
 
     }
-
-    public class MyAsyncTask extends AsyncTask<Void,Integer,String> {
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            mViewAdapter = new ViewAdapter(getApplicationContext(),pools);
-            mViewList.setAdapter(mViewAdapter);
-            mViewAdapter.notifyDataSetChanged();
-        }
-    }
+    
 
     private void sharedMyPreferences(Pool pool) {
         SharedPreferences  mysharedpreferences = getPreferences(MODE_PRIVATE);

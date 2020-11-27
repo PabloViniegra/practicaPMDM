@@ -27,7 +27,7 @@
 
         <activity android:name=".activities.InitHomeActivity" />
         <activity
-            android:name=".activities.splash_activity"
+            android:name=".activities.Splash_activity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

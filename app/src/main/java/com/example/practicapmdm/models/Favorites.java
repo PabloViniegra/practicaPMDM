@@ -1,9 +1,9 @@
 package com.example.practicapmdm.models;
 
-public class Favoritos {
+public class Favorites {
     private String favoritos;
 
-    public Favoritos(String favoritos) {
+    public Favorites(String favoritos) {
         this.favoritos = favoritos;
     }
 

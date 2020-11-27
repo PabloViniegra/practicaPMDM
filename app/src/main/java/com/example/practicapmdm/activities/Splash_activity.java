@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 import com.example.practicapmdm.R;
 
-public class splash_activity extends AppCompatActivity {
+public class Splash_activity extends AppCompatActivity {
 
     private final int DURACION_SPLASH=5000;
 
@@ -25,7 +25,7 @@ public class splash_activity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent= new Intent(splash_activity.this, InitHomeActivity.class);
+                Intent intent= new Intent(Splash_activity.this, InitHomeActivity.class);
                 startActivity(intent);
                 finish();
             };
