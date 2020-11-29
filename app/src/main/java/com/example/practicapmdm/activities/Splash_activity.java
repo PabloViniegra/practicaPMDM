@@ -12,7 +12,7 @@ import com.example.practicapmdm.R;
 
 public class Splash_activity extends AppCompatActivity {
 
-    private final int DURACION_SPLASH=5000;
+    private final int DURACION_SPLASH=3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/piscina"
     tools:context=".activities.Splash_activity">
 
-</RelativeLayout>
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_vertical"
+        android:layout_x="56dp"
+        android:layout_y="191dp"
+        android:background="@drawable/piscina"
+        android:scaleType="center"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="215dp"
+        android:layout_height="41dp"
+        android:layout_x="97dp"
+        android:layout_y="547dp"
+        android:text="CARGANDO..."
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+</AbsoluteLayout>

@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class fileControllers {
+public class FileControllers {
 
     public ArrayList fileReader(){
         ArrayList<Favorites> arrayFavoritos= new ArrayList();
