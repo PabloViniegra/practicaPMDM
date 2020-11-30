@@ -65,6 +65,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     public static Double longitude;
     public String name;
     private ArrayList<Pool> mPools;
+    private ArrayList<Pool> mSport;
     public Double latitudReceive = null;
     public Double longitudReceive = null;
 
@@ -118,7 +119,6 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     };
 
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == 1) {
@@ -133,14 +133,12 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
     @Override
@@ -169,12 +167,12 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     }
 
 
-
-    public void startService () {
+    public void startService() {
         Intent intentService = new Intent(getApplicationContext(), GpsService.class);
         startService(intentService);
     }
-    public void getPoolsNear () {
+
+    public void getPoolsNear() {
 
         Retrofit retrofit = new Retrofit.Builder().
                 baseUrl(Constants.HEADER_URL)
@@ -187,19 +185,63 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 if (response != null && response.body() != null) {
                     mPools = (ArrayList<Pool>) response.body().results;
-                    Intent sendPools = new Intent(getApplicationContext(), ActivityViewAdapter.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("LIST", mPools);
-                    sendPools.putExtras(bundle);
-                    startActivity(sendPools);
                     for (Pool mPool : mPools) {
                         Log.d(TAG, mPool.getName() == null ? "" : mPool.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
-                        Log.d(TAG, String.valueOf(mPool.getLocation().getLatitude()==0 ? "" : mPool.getLocation().getLatitude()));
+                        Log.d(TAG, String.valueOf(mPool.getLocation().getLatitude() == 0 ? "" : mPool.getLocation().getLatitude()));
                         Log.d(TAG, String.valueOf(mPool.getLocation().getLongitude() == 0 ? "" : mPool.getLocation().getLongitude()));
                     }
                     Log.d(TAG, "Parametros de salida: " + latitude + " " + longitude + " " + Constants.DISTANCE);
                 }
 
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+
+            }
+        });
+
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(Constants.HEADER_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mApi.getSports(latitude, longitude, Constants.DISTANCE).enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                Log.d(TAG, "Antes de entrar en el arraylist de sports");
+                ArrayList<Pool> temporal = new ArrayList<>();
+                Pool pool;
+                Log.d(TAG, "tamaño " + String.valueOf(mPools.size()));
+                if (response != null && response.body() != null) {
+                    mSport = (ArrayList<Pool>) response.body().results;
+                    for (int i = 0; i < mSport.size(); i++) {
+                        for (int j = 0; j < mPools.size(); j++) {
+                            if (mPools.get(i).getName().equalsIgnoreCase(mSport.get(j).getName())) {
+                                pool = new Pool(mSport.get(i).getName(), mSport.get(i).getLocation());
+                                Log.d(TAG,"Pool actual: " + pool.toString());
+                                temporal.add(pool);
+                            }
+                        }
+                    }
+                    mSport = temporal;
+                    Intent sendSports = new Intent(getApplicationContext(),ActivityViewAdapter.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("LIST",mPools);
+                    if (mSport.size() != 0) {
+                        bundle.putParcelableArrayList("LIST2", mSport);
+                    } else {
+                        Log.d(TAG, "El arraylist de sports esta vacio");
+                    }
+                    sendSports.putExtras(bundle);
+                    startActivity(sendSports);
+
+                    /*for (Pool mPool : mSport) {
+                        Log.d(TAG, mPool.getName() == null ? "" : mPool.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
+                        Log.d(TAG, String.valueOf(mPool.getLocation().getLatitude() == 0 ? "" : mPool.getLocation().getLatitude()));
+                        Log.d(TAG, String.valueOf(mPool.getLocation().getLongitude() == 0 ? "" : mPool.getLocation().getLongitude()));
+                    }
+                    Log.d(TAG, "Parametros de salida: " + latitude + " " + longitude + " " + Constants.DISTANCE);*/
+                }
             }
 
             @Override

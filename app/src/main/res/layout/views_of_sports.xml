@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtPool"
+        android:id="@+id/txtSport"
         android:gravity="center"
         android:textAlignment="center"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
@@ -28,6 +28,6 @@
         android:layout_height="50dp"
         android:layout_x="344dp"
         android:layout_y="31dp"
-        android:src="@drawable/piscina" />
+        android:src="@drawable/sports" />
 
 </LinearLayout>

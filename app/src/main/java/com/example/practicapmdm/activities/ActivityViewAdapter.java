@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.practicapmdm.R;
 import com.example.practicapmdm.impl.ViewAdapter;
+import com.example.practicapmdm.impl.ViewAdapterSports;
 import com.example.practicapmdm.models.Location;
 import com.example.practicapmdm.models.Pool;
 import com.google.gson.Gson;
@@ -31,7 +32,9 @@ public class ActivityViewAdapter extends AppCompatActivity {
     public final String TAG = getClass().getName();
     private ViewAdapter mViewAdapter;
     private ListView mViewList = null;
+    private ViewAdapterSports mViewAdapterSports;
     private ArrayList<Pool> pools;
+    private ArrayList<Pool> sports;
     //private Button btnLike = null;
     public ArrayList<Pool> myFavoritePools = new ArrayList<>();
 
@@ -44,6 +47,7 @@ public class ActivityViewAdapter extends AppCompatActivity {
         Intent getIntent = getIntent();
         Bundle bundle = getIntent().getExtras();
         pools = bundle.getParcelableArrayList("LIST");
+        sports = bundle.getParcelableArrayList("LIST2");
         Log.d(TAG, "Antes de recibir el intent de la lista");
         for (Pool pool : pools) {
             Log.d(TAG,"He entrado en el array de piscinas");
@@ -51,6 +55,16 @@ public class ActivityViewAdapter extends AppCompatActivity {
             Log.d(TAG, String.valueOf(pool.getLocation().getLatitude()));
             Log.d(TAG, String.valueOf(pool.getLocation().getLongitude()));
         }
+        for (Pool pool : sports) {
+            Log.d(TAG,"He entrado en el array de sports");
+            Log.d(TAG, pool.getName());
+            Log.d(TAG, String.valueOf(pool.getLocation().getLatitude()));
+            Log.d(TAG, String.valueOf(pool.getLocation().getLongitude()));
+        }
+
+
+
+
 
         mViewList = findViewById(R.id.myListView);
         Log.d(TAG, "Antes del evento click en el list view");
@@ -71,6 +85,9 @@ public class ActivityViewAdapter extends AppCompatActivity {
         mViewAdapter = new ViewAdapter(getApplicationContext(),pools);
         mViewList.setAdapter(mViewAdapter);
         mViewAdapter.notifyDataSetChanged();
+        mViewAdapterSports = new ViewAdapterSports(getApplicationContext(),sports);
+        mViewList.setAdapter(mViewAdapterSports);
+        mViewAdapterSports.notifyDataSetChanged();
 
         /*btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
