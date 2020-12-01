@@ -65,4 +65,12 @@ public class Location implements Parcelable {
         dest.writeDouble(this.latitude);
         dest.writeDouble(this.longitude);
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
 }

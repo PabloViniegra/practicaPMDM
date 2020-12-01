@@ -17,7 +17,7 @@
     <!--Menu Options -->
     <string name="nav_item_one">Ubicación actual</string>
     <string name="nav_item_two">Guardar ubicación de instalaciones deportivas</string>
-    <string name="nav_item_three">Piscinas</string>
+    <string name="nav_item_three">Piscinas y Polideportivos</string>
     <string name="nav_item_four">Páginas de Interés</string>
     <string name="nav_item_five">Favoritos</string>
 </resources>

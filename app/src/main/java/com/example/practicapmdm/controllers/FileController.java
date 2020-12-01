@@ -13,27 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FileController {
-    public ArrayList fileFavReader() {
-        ArrayList<Pool> arrayFav = new ArrayList();
-        Favourites favourites;
-        Pool pool;
-        String name;
-        Location location;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("favorites.txt"));
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] tokens = linea.split(":");
-                location=new Location(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
-                pool=new Pool(tokens[0],location);
-                arrayFav.add(pool);
-            }
-            br.close();
-        } catch (FileNotFoundException e) {
-        } catch (IOException e) {
-        }
-        return arrayFav;
-    }
 
     public void fileFavWriter(ArrayList<Pool> arrayFav) {
 
@@ -54,5 +33,26 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList fileFavReader() {
+        ArrayList<Pool> arrayFav = new ArrayList();
+        Favourites favourites;
+        Pool pool;
+        String name;
+        Location location;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("favorites.txt"));
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] tokens = linea.split(":");
+                location=new Location(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
+                pool=new Pool(tokens[0],location);
+                arrayFav.add(pool);
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return arrayFav;
     }
 }
