@@ -21,6 +21,13 @@ public class Pool implements Parcelable {
         this.location = location;
     }
 
+    @Override
+    public String toString() {
+        return "Pool{" +
+                "name='" + name + '\'' +
+                ", location=" + location +
+                '}';
+    }
 
     protected Pool(Parcel in) {
         name = in.readString();
