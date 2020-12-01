@@ -1,3 +1,4 @@
+
 package com.example.practicapmdm.activities;
 
 import android.Manifest;
@@ -5,18 +6,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -28,21 +24,14 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.practicapmdm.R;
 import com.example.practicapmdm.apiRest.ApiLocationMadridData;
 import com.example.practicapmdm.constants.Constants;
-import com.example.practicapmdm.controllers.FileControllers;
+import com.example.practicapmdm.controllers.FileController;
 import com.example.practicapmdm.domain.JsonResponse;
-import com.example.practicapmdm.impl.ViewAdapter;
 import com.example.practicapmdm.models.Location;
 import com.example.practicapmdm.models.Pool;
 import com.example.practicapmdm.services.GpsService;
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,7 +54,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     public static Double latitude;
     public static Double longitude;
     public String name;
-    FileControllers fileControllers;
+    FileController fileControllers;
     public static ArrayList<Pool> favourites = new ArrayList<>();
     private Pool pool;
     private ArrayList<Pool> mPools = new ArrayList<>();
@@ -78,8 +67,8 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_main);
-        fileControllers = new FileControllers();
-        favourites = fileControllers.fileReader();
+        fileControllers = new FileController();
+        favourites = fileControllers.fileFavReader();
         setToolbar();
         drawerLayout = findViewById(R.id.drawer_layout);
 
