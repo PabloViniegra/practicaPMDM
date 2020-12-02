@@ -31,7 +31,6 @@ public class FileController {
     }
     public ArrayList fileFavReader() {
         ArrayList<Pool> arrayFav = new ArrayList();
-        Favourites favourites;
         Pool pool;
         String name;
         Location location;
