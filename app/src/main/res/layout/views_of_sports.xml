@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_gravity="center_vertical"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:layout_gravity="center_horizontal"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:padding="16dp">
+    android:padding="50dp">
 
     <Button
         android:id="@+id/btnFav"
@@ -24,10 +25,9 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_x="344dp"
-        android:layout_y="31dp"
-        android:src="@drawable/sports" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/sports"
+        android:layout_marginRight="20dp"/>
 
 </LinearLayout>

@@ -1,3 +1,4 @@
+
 package com.example.practicapmdm.models;
 
 import android.os.Parcel;
@@ -86,3 +87,5 @@ public class Pool implements Parcelable {
 
 
 }
+
+
