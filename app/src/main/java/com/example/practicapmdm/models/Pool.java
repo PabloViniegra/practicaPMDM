@@ -7,6 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Pool implements Parcelable {
     @SerializedName("title")
@@ -15,6 +16,15 @@ public class Pool implements Parcelable {
     @SerializedName("location")
     @Expose
     private Location location;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pool pool = (Pool) o;
+        return name.equals(pool.name);
+    }
+
 
     public Pool (String name, Location location) {
         this.name = name;

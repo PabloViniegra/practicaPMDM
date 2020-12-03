@@ -70,7 +70,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     private Pool pool;
     private ArrayList<Pool> mPools = new ArrayList<>();
     private ArrayList<Pool> mSport = new ArrayList<>();
-    private ArrayList<Pool> temporal = new ArrayList<>();
+    private ArrayList<Pool> temporal;
     public Double latitudReceive = null;
     public Double longitudReceive = null;
 
@@ -214,6 +214,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     }
 
     public void getSportsNear() {
+        temporal = new ArrayList<>();
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(Constants.HEADER_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -230,24 +231,20 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                     Log.d(TAG, "tamaño de msports: " + mSport.size());
 
                     for (int i = 0; i < mSport.size(); i++) {
-                        for (int j = 0; j < mPools.size(); j++) {
-                            if (!mSport.get(i).getName().equalsIgnoreCase(mPools.get(j).getName())) {
-                                pool = new Pool(mSport.get(i).getName(), mSport.get(i).getLocation());
-                                Log.d(TAG,"Pool actual: " + pool.toString());
-                                temporal.add(pool);
-
-                            }
+                        if (!mPools.contains(mSport.get(i))) {
+                            temporal.add(mSport.get(i));
                         }
-
                     }
 
                     if (temporal.size() == 0) temporal.add(new Pool("Undefined",new Location(0,0)));
+                    Log.d(TAG, "el tamaño del array temporal es: " + temporal.size());
                     mSport = temporal;
                     Intent sendSports = new Intent(getApplicationContext(),ActivityViewAdapter.class);
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("LIST",mPools);
                     bundle.putParcelableArrayList("LIST2", mSport);
                     sendSports.putExtras(bundle);
+                    Log.d(TAG, "tamaño de mPools antes de ser enviado a ActivityViewerADAPTER: " + mPools.size());
                     startActivity(sendSports);
                     Log.d(TAG, "array de centros deportivos. Inicio");
                     for (Pool mPool : mSport) {

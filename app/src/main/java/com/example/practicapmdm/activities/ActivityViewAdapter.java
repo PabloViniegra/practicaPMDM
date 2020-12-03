@@ -52,7 +52,7 @@ public class ActivityViewAdapter extends AppCompatActivity {
         setContentView(R.layout.activity_view_adapter);
         Bundle bundle = getIntent().getExtras();
         pools = bundle.getParcelableArrayList("LIST");
-        Log.d(TAG, "Antes de recibir el intent de la lista");
+        Log.d(TAG, "Piscinas que he recibido del HomeActivity: " + pools.size());
         for (Pool pool : pools) {
             Log.d(TAG, "He entrado en el array de piscinas");
             Log.d(TAG, pool.getName());
@@ -60,6 +60,7 @@ public class ActivityViewAdapter extends AppCompatActivity {
             Log.d(TAG, String.valueOf(pool.getLocation().getLongitude()));
         }
         sports = bundle.getParcelableArrayList("LIST2");
+        Log.d(TAG, "Polideportivos que he recibido del Home Activity: " + sports.size());
         for (Pool pool : sports) {
             Log.d(TAG, "He entrado en el array de sports en el activityvieweradapter");
             Log.d(TAG, pool.getName());
@@ -103,10 +104,8 @@ public class ActivityViewAdapter extends AppCompatActivity {
         });
 
 
-        Log.d(TAG, "Tamaño del array de piscinas antes de entrar en el viewAdapter:");
-        Log.d(TAG, String.valueOf(pools));
-        Log.d(TAG, "Tamaño del array de polideportivos antes de entrar en el viewAdapter:");
-        Log.d(TAG, String.valueOf(sports));
+        Log.d(TAG, "Tamaño del array de piscinas antes de entrar en el viewAdapter: " + pools.size());
+        Log.d(TAG, "Tamaño del array de polideportivos antes de entrar en el viewAdapter: " + sports.size());
         mViewAdapter = new ViewAdapter(getApplicationContext(), pools);
         mViewList.setAdapter(mViewAdapter);
         mViewAdapter.notifyDataSetChanged();
