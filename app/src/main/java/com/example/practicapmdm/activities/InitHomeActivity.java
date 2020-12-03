@@ -67,10 +67,10 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_main);
-        fileControllers = new FileController();
-        favourites = fileControllers.fileFavReader();
+        raiseFavoriteFileIntoArray();
         setToolbar();
         drawerLayout = findViewById(R.id.drawer_layout);
+        Log.d(TAG, "Contenido de favoritos: " + favourites.toString());
 
 
         NavigationView navigationView = findViewById(R.id.navview);
@@ -96,6 +96,11 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
 
         Log.d(TAG, "Latitude " + String.valueOf(latitudeReceive));
         Log.d(TAG, "Longitude " + String.valueOf(longitudeReceive));
+    }
+
+    private void raiseFavoriteFileIntoArray() {
+        fileControllers = new FileController();
+        favourites = fileControllers.fileFavReader();
     }
 
     private void setToolbar() {
