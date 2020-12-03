@@ -10,6 +10,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -71,7 +73,6 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         setToolbar();
         drawerLayout = findViewById(R.id.drawer_layout);
         Log.d(TAG, "Contenido de favoritos: " + favourites.toString());
-
 
         NavigationView navigationView = findViewById(R.id.navview);
         if (navigationView != null) {
@@ -156,6 +157,8 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                 getSportsNear();
                 break;
             case R.id.nav_item_four:
+                Intent intentInterestLink=new Intent(InitHomeActivity.this, WebViewActivity.class );
+                startActivity(intentInterestLink);
                 break;
             case R.id.nav_item_five:
                 break;
