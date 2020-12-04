@@ -73,6 +73,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_main);
         raiseFavoriteFileIntoArray();
+        Log.d(TAG, "Inicio de la app: contenido de favoritos: " + favourites.toString());
         setToolbar();
         
         drawerLayout = findViewById(R.id.drawer_layout);

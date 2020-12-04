@@ -15,17 +15,19 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 public class FileController {
 
-    public void fileFavWriter(Pool pool,Context ctx) {
+    public void fileFavWriter(ArrayList<Pool> pools,Context ctx) {
 
         String FILENAME = "favourites";
         FileOutputStream fos;
         try {
             fos = ctx.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fos.write(pool.getName().getBytes());
-            fos.write(":".getBytes());
-            fos.write((pool.getLocation().getLatitude()+"").getBytes());
-            fos.write(":".getBytes());
-            fos.write((pool.getLocation().getLongitude()+"").getBytes());
+            for (int i = 0; i < pools.size(); i++) {
+                fos.write(pools.get(i).getName().getBytes());
+                fos.write(":".getBytes());
+                fos.write((pools.get(i).getLocation().getLatitude()+"").getBytes());
+                fos.write(":".getBytes());
+                fos.write((pools.get(i).getLocation().getLongitude()+"").getBytes());
+            }
             fos.close();
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -6,7 +6,11 @@
     android:layout_margin="@dimen/activity_horizontal_margin"
     android:layout_gravity="center_horizontal"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:padding="50dp">
+    android:padding="50dp"
+    android:clickable="false"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
 
     <Button
         android:id="@+id/btnFav"
@@ -14,7 +18,10 @@
         android:layout_height="50dp"
         android:layout_x="17dp"
         android:layout_y="31dp"
-        android:background="@drawable/amor" />
+        android:background="@drawable/amor"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <TextView
         android:layout_width="match_parent"
