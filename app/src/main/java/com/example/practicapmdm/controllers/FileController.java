@@ -1,22 +1,37 @@
 
 package com.example.practicapmdm.controllers;
 
+import android.content.Context;
+
 import com.example.practicapmdm.models.Location;
 import com.example.practicapmdm.models.Pool;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
 public class FileController {
 
-    public void fileFavWriter(Pool pool) {
+    public void fileFavWriter(Pool pool,Context ctx) {
 
-        File file = new File("favorites.txt");
+        String FILENAME = "favourites";
+        FileOutputStream fos;
+        try {
+            fos = ctx.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            fos.write(pool.getName().getBytes());
+            fos.write(":".getBytes());
+            fos.write((pool.getLocation().getLatitude()+"").getBytes());
+            fos.write(":".getBytes());
+            fos.write((pool.getLocation().getLongitude()+"").getBytes());
+            fos.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+     /*   File file = new File("favorites.txt");
         FileWriter fileWriter;
         try {
             fileWriter=new FileWriter(file,true);
@@ -28,8 +43,9 @@ public class FileController {
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
+
     public ArrayList fileFavReader() {
         ArrayList<Pool> arrayFav = new ArrayList();
         Pool pool;

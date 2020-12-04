@@ -33,6 +33,9 @@ import com.example.practicapmdm.models.Pool;
 import com.example.practicapmdm.services.GpsService;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -71,6 +74,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.app_bar_main);
         raiseFavoriteFileIntoArray();
         setToolbar();
+        
         drawerLayout = findViewById(R.id.drawer_layout);
         Log.d(TAG, "Contenido de favoritos: " + favourites.toString());
 
