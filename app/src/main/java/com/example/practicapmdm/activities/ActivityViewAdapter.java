@@ -87,13 +87,13 @@ public class ActivityViewAdapter extends AppCompatActivity {
         mViewList.setOnItemClickListener((parent, view, i, id) -> {
             Log.d(TAG, "dentro del evento");
             Toast.makeText(ActivityViewAdapter.this, "Click en el ListView", Toast.LENGTH_SHORT).show();
-            Intent locationSchoolIntent = new Intent(getApplicationContext(), MapsActivity.class);
-            locationSchoolIntent.putExtra(NAME, pools.get(i).getName());
-            locationSchoolIntent.putExtra(DESCRIPTION_KEY, DESCRIPTION);
-            locationSchoolIntent.putExtra(LATITUDE, pools.get(i).getLocation().getLatitude());
-            locationSchoolIntent.putExtra(LONGITUDE, pools.get(i).getLocation().getLongitude());
+            Intent locationPoolIntent = new Intent(getApplicationContext(), MapsActivity.class);
+            locationPoolIntent.putExtra(NAME, pools.get(i).getName());
+            locationPoolIntent.putExtra(DESCRIPTION_KEY, DESCRIPTION);
+            locationPoolIntent.putExtra(LATITUDE, pools.get(i).getLocation().getLatitude());
+            locationPoolIntent.putExtra(LONGITUDE, pools.get(i).getLocation().getLongitude());
             poolclick = new Pool(pools.get(i).getName(), new Location(pools.get(i).getLocation().getLatitude(), pools.get(i).getLocation().getLongitude()));
-            startActivity(locationSchoolIntent);
+            startActivity(locationPoolIntent);
 
         });
 

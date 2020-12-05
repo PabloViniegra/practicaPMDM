@@ -19,5 +19,8 @@
     <string name="nav_item_three">Piscinas y Polideportivos</string>
     <string name="nav_item_four">Páginas de Interés</string>
     <string name="nav_item_five">Favoritos</string>
+    <string name="header_favourite">LISTA DE FAVORITOS</string>
+    <string name="typeSport">[Polideportivo]</string>
+    <string name="typePool">[Piscina]</string>
 
 </resources>

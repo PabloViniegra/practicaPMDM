@@ -17,7 +17,8 @@
         android:roundIcon="@drawable/piscina"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.WebViewActivity"></activity>
+        <activity android:name=".activities.FavouritesActivity"></activity>
+        <activity android:name=".activities.WebViewActivity" />
         <activity android:name=".activities.MapsActivity" />
         <activity android:name=".activities.ActivityViewAdapter" />
 

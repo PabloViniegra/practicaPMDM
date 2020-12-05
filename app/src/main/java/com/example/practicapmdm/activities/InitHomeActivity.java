@@ -166,6 +166,8 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intentInterestLink);
                 break;
             case R.id.nav_item_five:
+                Intent goFavourites = new Intent(InitHomeActivity.this,FavouritesActivity.class);
+                startActivity(goFavourites);
                 break;
             default:
                 Log.d(TAG, "No he entrado por el onNavigationGetItemSelected");

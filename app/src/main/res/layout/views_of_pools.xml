@@ -12,6 +12,13 @@
     android:focusable="false"
     android:focusableInTouchMode="false">
 
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="20dp"
+        android:text="@string/typePool"
+        android:textAlignment="center"
+        android:layout_marginLeft="100dp"/>
+
     <Button
         android:id="@+id/btnFav"
         android:layout_width="50dp"
