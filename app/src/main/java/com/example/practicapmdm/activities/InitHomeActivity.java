@@ -151,6 +151,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_item_one:
+                Toast.makeText(this, "¡Ubicación actualizada!", Toast.LENGTH_SHORT).show();
                 Intent intentMaps = new Intent(InitHomeActivity.this, MapsActivity.class);
                 intentMaps.putExtra(LATITUDE, latitude);
                 intentMaps.putExtra(LONGITUDE, longitude);

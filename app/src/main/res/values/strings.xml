@@ -22,5 +22,9 @@
     <string name="header_favourite">LISTA DE FAVORITOS</string>
     <string name="typeSport">[Polideportivo]</string>
     <string name="typePool">[Piscina]</string>
+    <string name="turism">TURISMO</string>
+    <string name="pool">PISCINA</string>
+    <string name="sportCenter">POLIDEPORTIVO</string>
+    <string name="generallysports">DEPORTE</string>
 
 </resources>

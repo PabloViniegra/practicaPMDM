@@ -131,6 +131,8 @@ public class ActivityViewAdapter extends AppCompatActivity {
             fileControllers = new FileController();
             Log.d(TAG, "Contenido del Array de favoritos: " + favourites.toString());
             favourites = fileControllers.fileFavReader();
+            poolclick = new Pool(pools.get(info.position).getName(), new Location(pools.get(info.position).getLocation().getLatitude(), pools.get(info.position).getLocation().getLongitude()));
+            Log.d(TAG,"poolclick: antes de entrar en favoritos: " + poolclick.toString());
             if (!InitHomeActivity.favourites.contains(poolclick)) {
                 InitHomeActivity.favourites.add(poolclick);
                 fileControllers.fileFavWriter(favourites, getApplicationContext());
@@ -140,6 +142,7 @@ public class ActivityViewAdapter extends AppCompatActivity {
 
         } else if (item.getItemId() == 3 || item.getItemId() == 6) {
             Log.d(TAG, "Activado quitar de favoritos");
+            poolclick = new Pool(pools.get(info.position).getName(), new Location(pools.get(info.position).getLocation().getLatitude(), pools.get(info.position).getLocation().getLongitude()));
             for (int i = 0; i < favourites.size(); i++) {
                 if (favourites.get(i).getName().equalsIgnoreCase(poolclick.getName())) {
                     favourites.remove(i);
