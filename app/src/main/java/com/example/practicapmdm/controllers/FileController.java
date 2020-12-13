@@ -17,7 +17,7 @@ public class FileController {
 
     public void fileFavWriter(ArrayList<Pool> pools,Context ctx) {
 
-        String FILENAME = "favourites";
+        String FILENAME = "favourites.txt";
         FileOutputStream fos;
         try {
             fos = ctx.openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -54,7 +54,7 @@ public class FileController {
         String name;
         Location location;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("favorites.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("favourites.txt"));
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] tokens = linea.split(":");
