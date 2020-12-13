@@ -4,6 +4,7 @@ package com.example.practicapmdm.controllers;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.nfc.Tag;
 import android.util.Log;
 
@@ -22,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
@@ -33,55 +35,51 @@ import static com.example.practicapmdm.constants.Constants.TAG;
 public class FileController {
 
 
+
     public void fileFavWriter(ArrayList<Pool> pools, Context ctx) {
 
-        for (int i = 0; i < pools.size(); i++) {
-            Log.d(TAG, "NOMBREFILE: " + pools.get(i).getName());
-            Log.d(TAG, "LATITUDFILE: " + pools.get(i).getLocation().getLatitude());
-            Log.d(TAG, "LONGITUDFILE: " + pools.get(i).getLocation().getLongitude());
-        }
-        File file = new File("favourites.txt");
-        FileOutputStream fileOutputStream;
-        try {
-            fileOutputStream = ctx.openFileOutput("favourites.txt", Context.MODE_PRIVATE);
-            for (Pool pool : pools) {
-                fileOutputStream.write(pool.getName().getBytes());
-                fileOutputStream.write(':');
-                fileOutputStream.write(String.valueOf(pool.getLocation().getLatitude()).getBytes());
-                fileOutputStream.write(':');
-                fileOutputStream.write(String.valueOf(pool.getLocation().getLongitude()).getBytes());
-                fileOutputStream.write('\n');
-            }
-            fileOutputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        /*FileWriter fileWriter;
+        ArrayList<Pool> arrayfileFavReader = new ArrayList<>();
+        arrayfileFavReader = fileFavReader(ctx);
+        Pool poolAux;
+        Log.d(TAG,"TAMAÑO DEL ARRAY AUXILIAR"+arrayfileFavReader.size());
+        for (int i = 0; i < arrayfileFavReader.size(); i++) {
+            if (arrayfileFavReader.get(i).getName().equalsIgnoreCase(pools.get(0).getName())) {
+                poolAux = new Pool(pools.get(0).getName(), pools.get(0).getLocation());
+                arrayfileFavReader.add(poolAux);
 
+            }
+
+        }
+
+        String FILENAME = "favourites.txt";
+        FileOutputStream fos;
         try {
-            fileWriter = new FileWriter(file);
+            fos = ctx.openFileOutput(FILENAME, Context.MODE_PRIVATE);
             for (int i = 0; i < pools.size(); i++) {
-                fileWriter.write(pools.get(i).getName());
-                fileWriter.append(":");
-                fileWriter.write(pools.get(i).getLocation().getLatitude() + "");
-                fileWriter.append(":");
-                fileWriter.write(pools.get(i).getLocation().getLongitude() + "");
-                fileWriter.append("/n");
+                fos.write(pools.get(i).getName().getBytes());
+                fos.write(":".getBytes());
+                fos.write((pools.get(i).getLocation().getLatitude() + "").getBytes());
+                fos.write(":".getBytes());
+                fos.write((pools.get(i).getLocation().getLongitude() + "").getBytes());
             }
-            fileWriter.close();
+            fos.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        for (int i = 0; i < pools.size(); i++) {
+            Log.d(TAG, "NOMBREF: " + pools.get(i).getName());
+            Log.d(TAG, "LATITUDF: " + pools.get(i).getLocation().getLatitude());
+            Log.d(TAG, "LONGITUDF: " + pools.get(i).getLocation().getLongitude());
+        }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
-    public ArrayList fileFavReader() {
+    public ArrayList fileFavReader(Context ctx) {
         ArrayList<Pool> arrayFav = new ArrayList();
         Pool pool;
         Location location;
         File file = new File("favourites.txt");
+
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -91,7 +89,12 @@ public class FileController {
         }
         BufferedReader bred;
 
-        try {
+        
+
+
+      /*  try {
+
+>>>>>>> 5abeefdedf831e9c6950caeacfacd2e4d80010c6
             BufferedReader br = new BufferedReader(new FileReader("favourites.txt"));
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -105,10 +108,34 @@ public class FileController {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+<<<<<<< HEAD
         } finally {
             return arrayFav;
         }
 
+=======
+        }*/
+        String FILENAME = "favourites.txt";
+        FileInputStream fis;
+
+        AssetManager am = ctx.getAssets();
+        try {
+            InputStream inputStream = am.open(FILENAME);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String linea;
+            while ((linea = bufferedReader.readLine()) != null) {
+                String[] tokens = linea.split(":");
+                location = new Location(Double.parseDouble(tokens[1]), Double.parseDouble(tokens[2]));
+                pool = new Pool(tokens[0], location);
+                Log.d(TAG, "--------------------------------------------------" + tokens[0] + " " + tokens[1] + " " + tokens[2]);
+                arrayFav.add(pool);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return arrayFav;
+
     }
 }
-

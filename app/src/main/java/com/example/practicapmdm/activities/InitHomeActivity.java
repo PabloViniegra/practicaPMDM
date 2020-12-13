@@ -118,7 +118,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
 
     private void raiseFavoriteFileIntoArray() {
         fileControllers = new FileController();
-        favourites = fileControllers.fileFavReader();
+        favourites = fileControllers.fileFavReader(this);
     }
 
     private void setToolbar() {
