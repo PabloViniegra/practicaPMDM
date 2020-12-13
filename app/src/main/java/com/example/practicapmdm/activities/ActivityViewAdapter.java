@@ -3,8 +3,11 @@
 
 package com.example.practicapmdm.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -17,6 +20,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.practicapmdm.R;
 import com.example.practicapmdm.controllers.FileController;
@@ -130,12 +135,49 @@ public class ActivityViewAdapter extends AppCompatActivity {
             Log.d(TAG, "activado el botón del Like");
             fileControllers = new FileController();
             Log.d(TAG, "Contenido del Array de favoritos: " + favourites.toString());
-            favourites = fileControllers.fileFavReader();
+
+            InitHomeActivity.favourites.add(poolclick);
+
+            int permissionCheckR = ContextCompat.checkSelfPermission(this
+                    , Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (permissionCheckR != PackageManager.PERMISSION_GRANTED) {
+                Log.i("Mensaje", "No se tiene permiso para leer.");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 225);
+            } else {
+                Log.i("Mensaje", "Se tiene permiso para leer!");
+                favourites = fileControllers.fileFavReader();
+            }
+
+
             poolclick = new Pool(pools.get(info.position).getName(), new Location(pools.get(info.position).getLocation().getLatitude(), pools.get(info.position).getLocation().getLongitude()));
             Log.d(TAG,"poolclick: antes de entrar en favoritos: " + poolclick.toString());
-            if (!InitHomeActivity.favourites.contains(poolclick)) {
+            Log.d(TAG,"favourites: tamaño: " + favourites.size());
+
+            int auxFavPoolClick=0;
+
+            for (int i = 0; i <favourites.size() ; i++) {
+
+                if(!favourites.get(i).getName().equalsIgnoreCase(poolclick.getName())){
+                    auxFavPoolClick=1;
+                }
+                Log.d(TAG,"auxFavPoolClickFav:"+favourites.get(i).getName() );
+                Log.d(TAG,"auxFavPoolClickPoolClick:"+poolclick.getName());
+                Log.d(TAG,"auxFavPoolClick:"+auxFavPoolClick );
+            }
+
+
+            if (auxFavPoolClick==0) {
                 InitHomeActivity.favourites.add(poolclick);
-                fileControllers.fileFavWriter(favourites, getApplicationContext());
+
+                int permissionCheckW = ContextCompat.checkSelfPermission(this
+                        , Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permissionCheckW != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("Mensaje", "No se tiene permiso para leer.");
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+                } else {
+                    Log.i("Mensaje", "Se tiene permiso para leer y escribir!");
+                    fileControllers.fileFavWriter(favourites, getApplicationContext());
+                }
             } else {
                 Toast.makeText(this, "Esta piscina/polideportivo ya existe", Toast.LENGTH_SHORT).show();
             }
@@ -148,6 +190,9 @@ public class ActivityViewAdapter extends AppCompatActivity {
                     favourites.remove(i);
                 }
             }
+
+
+
             fileControllers.fileFavWriter(favourites, getApplicationContext());
             Log.d(TAG, "Contenido del Array de favoritos para borrar: " + favourites.toString());
 
