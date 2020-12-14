@@ -145,7 +145,7 @@ public class ActivityViewAdapter extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 225);
             } else {
                 Log.i("Mensaje", "Se tiene permiso para leer!");
-                favourites = fileControllers.fileFavReader(this);
+                favourites = fileControllers.fileFavReader();
             }
 
 
