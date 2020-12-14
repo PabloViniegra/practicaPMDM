@@ -35,6 +35,8 @@ import static com.example.practicapmdm.constants.Constants.TAG;
 
 public class FileController {
 
+
+
     public void fileFavWriter(ArrayList<Pool> pools, Context ctx) {
 
         ArrayList<Pool> arrayfileFavReader = new ArrayList<>();
@@ -71,17 +73,34 @@ public class FileController {
             Log.d(TAG, "LATITUDF: " + pools.get(i).getLocation().getLatitude());
             Log.d(TAG, "LONGITUDF: " + pools.get(i).getLocation().getLongitude());
         }
+
     }
 
     public ArrayList fileFavReader() {
         ArrayList<Pool> arrayFav = new ArrayList();
         Pool pool;
-        String name;
         Location location;
         File file = new File("favourites.txt");
+<<<<<<< HEAD
         Log.d(TAG, "entrando en la lectura del fichero");
+=======
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        BufferedReader bred;
+
+        
+
+
+>>>>>>> 82a92f81aa829376dd23eb31c3de740351da3262
       /*  try {
 
+>>>>>>> 5abeefdedf831e9c6950caeacfacd2e4d80010c6
             BufferedReader br = new BufferedReader(new FileReader("favourites.txt"));
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -95,6 +114,12 @@ public class FileController {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+<<<<<<< HEAD
+        } finally {
+            return arrayFav;
+        }
+
+=======
         }*/
         FileInputStream fis;
         InputStream is;
@@ -125,5 +150,6 @@ public class FileController {
         }
         Log.d(TAG, "saliendo de la lectura del documento");
         return arrayFav;
+
     }
 }
