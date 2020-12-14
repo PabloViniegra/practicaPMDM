@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Pool implements Parcelable {
+public class Pool implements Parcelable, Serializable {
     @SerializedName("title")
     @Expose
     private String name;
@@ -23,7 +23,7 @@ public class Pool implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pool pool = (Pool) o;
-        return name.equals(pool.name);
+        return name.equalsIgnoreCase(pool.name);
     }
 
 

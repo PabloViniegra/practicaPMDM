@@ -7,7 +7,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Location implements Parcelable {
+import java.io.Serializable;
+
+public class Location implements Parcelable, Serializable {
     @SerializedName("latitude")
     @Expose
     private double latitude;

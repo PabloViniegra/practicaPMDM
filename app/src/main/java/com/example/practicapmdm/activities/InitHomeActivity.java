@@ -60,7 +60,6 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
     public static Double longitude;
     public String name;
     FileController fileControllers;
-    public static ArrayList<Pool> favourites = new ArrayList<>();
     private Pool pool;
     private ArrayList<Pool> mPools = new ArrayList<>();
     private ArrayList<Pool> mSport = new ArrayList<>();
@@ -73,11 +72,11 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_main);
         raiseFavoriteFileIntoArray();
-        Log.d(TAG, "Inicio de la app: contenido de favoritos: " + favourites.toString());
+        Log.d(TAG, "Inicio de la app: contenido de favoritos: " + Constants.favourites.toString());
         setToolbar();
-        
+
         drawerLayout = findViewById(R.id.drawer_layout);
-        Log.d(TAG, "Contenido de favoritos: " + favourites.toString());
+        Log.d(TAG, "Contenido de favoritos: " + Constants.favourites.toString());
 
         NavigationView navigationView = findViewById(R.id.navview);
         if (navigationView != null) {
@@ -104,9 +103,10 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         Log.d(TAG, "Longitude " + String.valueOf(longitudeReceive));
     }
 
+
     private void raiseFavoriteFileIntoArray() {
         fileControllers = new FileController();
-        favourites = fileControllers.fileFavReader(this);
+        Constants.favourites = fileControllers.fileFavReader(getApplicationContext());
     }
 
     private void setToolbar() {
@@ -163,11 +163,11 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                 getSportsNear();
                 break;
             case R.id.nav_item_four:
-                Intent intentInterestLink=new Intent(InitHomeActivity.this, WebViewActivity.class );
+                Intent intentInterestLink = new Intent(InitHomeActivity.this, WebViewActivity.class);
                 startActivity(intentInterestLink);
                 break;
             case R.id.nav_item_five:
-                Intent goFavourites = new Intent(InitHomeActivity.this,FavouritesActivity.class);
+                Intent goFavourites = new Intent(InitHomeActivity.this, FavouritesActivity.class);
                 startActivity(goFavourites);
                 break;
             default:
@@ -241,12 +241,13 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                         }
                     }
 
-                    if (temporal.size() == 0) temporal.add(new Pool("Undefined",new Location(0,0)));
+                    if (temporal.size() == 0)
+                        temporal.add(new Pool("Undefined", new Location(0, 0)));
                     Log.d(TAG, "el tamaño del array temporal es: " + temporal.size());
                     mSport = temporal;
-                    Intent sendSports = new Intent(getApplicationContext(),ActivityViewAdapter.class);
+                    Intent sendSports = new Intent(getApplicationContext(), ActivityViewAdapter.class);
                     Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("LIST",mPools);
+                    bundle.putParcelableArrayList("LIST", mPools);
                     bundle.putParcelableArrayList("LIST2", mSport);
                     sendSports.putExtras(bundle);
                     Log.d(TAG, "tamaño de mPools antes de ser enviado a ActivityViewerADAPTER: " + mPools.size());

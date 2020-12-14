@@ -4,15 +4,15 @@
 package com.example.practicapmdm.activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.nfc.Tag;
+
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
+
 import android.view.MenuItem;
-import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.practicapmdm.R;
+import com.example.practicapmdm.constants.Constants;
 import com.example.practicapmdm.controllers.FileController;
 import com.example.practicapmdm.impl.ViewAdapter;
 import com.example.practicapmdm.impl.ViewAdapterSports;
@@ -34,10 +35,10 @@ import java.util.ArrayList;
 
 import static com.example.practicapmdm.activities.InitHomeActivity.DESCRIPTION;
 import static com.example.practicapmdm.activities.InitHomeActivity.DESCRIPTION_KEY;
-import static com.example.practicapmdm.activities.InitHomeActivity.favourites;
 import static com.example.practicapmdm.constants.Constants.LATITUDE;
 import static com.example.practicapmdm.constants.Constants.LONGITUDE;
 import static com.example.practicapmdm.constants.Constants.NAME;
+import static com.example.practicapmdm.constants.Constants.favourites;
 
 public class ActivityViewAdapter extends AppCompatActivity {
     public final String TAG = getClass().getName();
@@ -101,6 +102,16 @@ public class ActivityViewAdapter extends AppCompatActivity {
             startActivity(locationPoolIntent);
 
         });
+        mViewSports.setOnItemClickListener((parent, view, position, id) -> {
+            Intent locationPoolIntent = new Intent(getApplicationContext(), MapsActivity.class);
+            locationPoolIntent.putExtra(NAME, sports.get(position).getName());
+            locationPoolIntent.putExtra(DESCRIPTION_KEY, DESCRIPTION);
+            locationPoolIntent.putExtra(LATITUDE, sports.get(position).getLocation().getLatitude());
+            locationPoolIntent.putExtra(LONGITUDE, sports.get(position).getLocation().getLongitude());
+            poolclick = new Pool(sports.get(position).getName(), new Location(sports.get(position).getLocation().getLatitude(), sports.get(position).getLocation().getLongitude()));
+            Log.d(TAG, "poolclick: " + poolclick.toString());
+            startActivity(locationPoolIntent);
+        });
 
 
         Log.d(TAG, "Tamaño del array de piscinas antes de entrar en el viewAdapter: " + pools.size());
@@ -123,80 +134,106 @@ public class ActivityViewAdapter extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        if (item.getItemId() == 1 || item.getItemId() == 4) {
-            Log.d(TAG, "dentro del evento");
-            Intent locationSchoolIntent = new Intent(getApplicationContext(), MapsActivity.class);
-            locationSchoolIntent.putExtra(NAME, pools.get(info.position).getName());
-            locationSchoolIntent.putExtra(DESCRIPTION_KEY, DESCRIPTION);
-            locationSchoolIntent.putExtra(LATITUDE, pools.get(info.position).getLocation().getLatitude());
-            locationSchoolIntent.putExtra(LONGITUDE, pools.get(info.position).getLocation().getLongitude());
-            startActivity(locationSchoolIntent);
-        } else if (item.getItemId() == 2 || item.getItemId() == 5) {
-            Log.d(TAG, "activado el botón del Like");
-            fileControllers = new FileController();
-            Log.d(TAG, "Contenido del Array de favoritos: " + favourites.toString());
+        switch (item.getItemId()) {
+            case 1: {
+                Log.d(TAG, "dentro del evento");
+                Intent locationSchoolIntent = new Intent(getApplicationContext(), MapsActivity.class);
+                locationSchoolIntent.putExtra(NAME, pools.get(info.position).getName());
+                locationSchoolIntent.putExtra(DESCRIPTION_KEY, DESCRIPTION);
+                locationSchoolIntent.putExtra(LATITUDE, pools.get(info.position).getLocation().getLatitude());
+                locationSchoolIntent.putExtra(LONGITUDE, pools.get(info.position).getLocation().getLongitude());
+                startActivity(locationSchoolIntent);
+                break;
 
-            InitHomeActivity.favourites.add(poolclick);
-
-            int permissionCheckR = ContextCompat.checkSelfPermission(this
-                    , Manifest.permission.READ_EXTERNAL_STORAGE);
-            if (permissionCheckR != PackageManager.PERMISSION_GRANTED) {
-                Log.i("Mensaje", "No se tiene permiso para leer.");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 225);
-            } else {
-                Log.i("Mensaje", "Se tiene permiso para leer!");
-                favourites = fileControllers.fileFavReader(this);
             }
+            case 2: {
+                fileControllers = new FileController();
+                Log.d(TAG, "Contenido del Array de favoritos: " + Constants.favourites.toString());
 
 
-            poolclick = new Pool(pools.get(info.position).getName(), new Location(pools.get(info.position).getLocation().getLatitude(), pools.get(info.position).getLocation().getLongitude()));
-            Log.d(TAG,"poolclick: antes de entrar en favoritos: " + poolclick.toString());
-            Log.d(TAG,"favourites: tamaño: " + favourites.size());
-
-            int auxFavPoolClick=0;
-
-            for (int i = 0; i <favourites.size() ; i++) {
-
-                if(!favourites.get(i).getName().equalsIgnoreCase(poolclick.getName())){
-                    auxFavPoolClick=1;
-                }
-                Log.d(TAG,"auxFavPoolClickFav:"+favourites.get(i).getName() );
-                Log.d(TAG,"auxFavPoolClickPoolClick:"+poolclick.getName());
-                Log.d(TAG,"auxFavPoolClick:"+auxFavPoolClick );
-            }
-
-
-            if (auxFavPoolClick==0) {
-                InitHomeActivity.favourites.add(poolclick);
-
-                int permissionCheckW = ContextCompat.checkSelfPermission(this
-                        , Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                if (permissionCheckW != PackageManager.PERMISSION_GRANTED) {
+                int permissionCheckR = ContextCompat.checkSelfPermission(this
+                        , Manifest.permission.READ_EXTERNAL_STORAGE);
+                if (permissionCheckR != PackageManager.PERMISSION_GRANTED) {
                     Log.i("Mensaje", "No se tiene permiso para leer.");
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 225);
                 } else {
-                    Log.i("Mensaje", "Se tiene permiso para leer y escribir!");
-                    fileControllers.fileFavWriter(favourites, getApplicationContext());
+                    Log.i("Mensaje", "Se tiene permiso para leer!");
+                    Constants.favourites = fileControllers.fileFavReader(getApplicationContext());
                 }
-            } else {
-                Toast.makeText(this, "Esta piscina/polideportivo ya existe", Toast.LENGTH_SHORT).show();
-            }
 
-        } else if (item.getItemId() == 3 || item.getItemId() == 6) {
-            Log.d(TAG, "Activado quitar de favoritos");
-            poolclick = new Pool(pools.get(info.position).getName(), new Location(pools.get(info.position).getLocation().getLatitude(), pools.get(info.position).getLocation().getLongitude()));
-            for (int i = 0; i < favourites.size(); i++) {
-                if (favourites.get(i).getName().equalsIgnoreCase(poolclick.getName())) {
-                    favourites.remove(i);
+
+                poolclick = new Pool(pools.get(info.position).getName(), new Location(pools.get(info.position).getLocation().getLatitude(), pools.get(info.position).getLocation().getLongitude()));
+                Log.d(TAG, "poolclick: antes de entrar en favoritos: " + poolclick.toString());
+                Log.d(TAG, "favourites: tamaño: " + Constants.favourites.size());
+
+                if (!Constants.favourites.contains(poolclick)) {
+                    favourites.add(poolclick);
+                    Toast.makeText(this, "Agregada a favoritos", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Ya estaba en favoritos", Toast.LENGTH_SHORT).show();
                 }
+
+                fileControllers.fileFavWriter(favourites, getApplicationContext());
+                break;
             }
+            case 3:
+                Log.d(TAG, "Activado quitar de favoritos");
+                fileControllers = new FileController();
+                poolclick = new Pool(pools.get(info.position).getName(), new Location(pools.get(info.position).getLocation().getLatitude(), pools.get(info.position).getLocation().getLongitude()));
+                for (int i = 0; i < Constants.favourites.size(); i++) {
+                    if (Constants.favourites.get(i).equals(poolclick)) {
+                        Constants.favourites.remove(i);
+                    }
+                }
+                Log.d(TAG, "Contenido del Array de favoritos para borrar: " + Constants.favourites.toString());
+                fileControllers.fileFavWriter(Constants.favourites, getApplicationContext());
+                break;
+            case 4: {
+                Intent locationSchoolIntent = new Intent(getApplicationContext(), MapsActivity.class);
+                locationSchoolIntent.putExtra(NAME, sports.get(info.position).getName());
+                locationSchoolIntent.putExtra(DESCRIPTION_KEY, DESCRIPTION);
+                locationSchoolIntent.putExtra(LATITUDE, sports.get(info.position).getLocation().getLatitude());
+                locationSchoolIntent.putExtra(LONGITUDE, sports.get(info.position).getLocation().getLongitude());
+                startActivity(locationSchoolIntent);
+                break;
+            }
+            case 5: {
+                fileControllers = new FileController();
+                Log.d(TAG, "Contenido del Array de favoritos: " + Constants.favourites.toString());
+                int permissionCheckR = ContextCompat.checkSelfPermission(this
+                        , Manifest.permission.READ_EXTERNAL_STORAGE);
+                if (permissionCheckR != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("Mensaje", "No se tiene permiso para leer.");
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 225);
+                } else {
+                    Log.i("Mensaje", "Se tiene permiso para leer!");
+                    Constants.favourites = fileControllers.fileFavReader(getApplicationContext());
+                }
+                poolclick = new Pool(sports.get(info.position).getName(), new Location(sports.get(info.position).getLocation().getLatitude(), sports.get(info.position).getLocation().getLongitude()));
+                Log.d(TAG, "poolclick: antes de entrar en favoritos: " + poolclick.toString());
+                Log.d(TAG, "favourites: tamaño: " + Constants.favourites.size());
 
+                if (!Constants.favourites.contains(poolclick)) {
+                    favourites.add(poolclick);
+                    Toast.makeText(this, "Agregada a favoritos", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Ya estaba en favoritos", Toast.LENGTH_SHORT).show();
+                }
 
-
-            fileControllers.fileFavWriter(favourites, getApplicationContext());
-            Log.d(TAG, "Contenido del Array de favoritos para borrar: " + favourites.toString());
-
-
+                fileControllers.fileFavWriter(favourites, getApplicationContext());
+                break;
+            }
+            case 6:
+                fileControllers = new FileController();
+                poolclick = new Pool(sports.get(info.position).getName(), new Location(sports.get(info.position).getLocation().getLatitude(), sports.get(info.position).getLocation().getLongitude()));
+                for (int i = 0; i < Constants.favourites.size(); i++) {
+                    if (Constants.favourites.get(i).equals(poolclick)) {
+                        Constants.favourites.remove(i);
+                    }
+                }
+                Log.d(TAG, "Contenido del Array de favoritos para borrar: " + Constants.favourites.toString());
+                fileControllers.fileFavWriter(Constants.favourites, getApplicationContext());
+                break;
         }
         return true;
     }
