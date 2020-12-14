@@ -26,5 +26,10 @@
     <string name="pool">PISCINA</string>
     <string name="sportCenter">POLIDEPORTIVO</string>
     <string name="generallysports">DEPORTE</string>
+    <string name="goMap">Ir al mapa</string>
+    <string name="goFavourites">Agregar a favoritos</string>
+    <string name="quiteFavourites">Quitar de favoritos</string>
+    <string name="undefined">Undefined</string>
+    <string name="loading">CARGANDO...</string>
 
 </resources>

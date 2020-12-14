@@ -10,8 +10,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,9 +31,6 @@ import com.example.practicapmdm.models.Pool;
 import com.example.practicapmdm.services.GpsService;
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -74,10 +69,7 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         raiseFavoriteFileIntoArray();
         Log.d(TAG, "Inicio de la app: contenido de favoritos: " + Constants.favourites.toString());
         setToolbar();
-
         drawerLayout = findViewById(R.id.drawer_layout);
-        Log.d(TAG, "Contenido de favoritos: " + Constants.favourites.toString());
-
         NavigationView navigationView = findViewById(R.id.navview);
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
@@ -87,20 +79,14 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
             ActivityCompat.requestPermissions(InitHomeActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
-            Log.d(TAG, "Empezando el servicio");
             startService();
         }
-
 
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(INTENT_LOCALIZATION_ACTION));
         Intent getIntent = getIntent();
         double latitudeReceive = getIntent.getDoubleExtra(LATITUDE, 0);
         double longitudeReceive = getIntent.getDoubleExtra(LONGITUDE, 0);
         String nameReceive = getIntent.getStringExtra(NAME);
-
-
-        Log.d(TAG, "Latitude " + String.valueOf(latitudeReceive));
-        Log.d(TAG, "Longitude " + String.valueOf(longitudeReceive));
     }
 
 
@@ -171,7 +157,6 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                 startActivity(goFavourites);
                 break;
             default:
-                Log.d(TAG, "No he entrado por el onNavigationGetItemSelected");
                 break;
 
         }
@@ -191,20 +176,11 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiLocationMadridData mApi = retrofit.create(ApiLocationMadridData.class);
-        Log.d(TAG, "Parametros de entrada: " + latitude + " " + longitude + " " + Constants.DISTANCE);
         mApi.getPools(latitude, longitude, Constants.DISTANCE).enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 if (response != null && response.body() != null) {
                     mPools = (ArrayList<Pool>) response.body().results;
-                    Log.d(TAG, "array de solo piscinas. Inicio");
-                    for (Pool mPool : mPools) {
-                        Log.d(TAG, mPool.getName() == null ? "" : mPool.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
-                        Log.d(TAG, String.valueOf(mPool.getLocation().getLatitude() == 0 ? "" : mPool.getLocation().getLatitude()));
-                        Log.d(TAG, String.valueOf(mPool.getLocation().getLongitude() == 0 ? "" : mPool.getLocation().getLongitude()));
-                    }
-                    Log.d(TAG, "Parametros de salida: " + latitude + " " + longitude + " " + Constants.DISTANCE);
-                    Log.d(TAG, "array de solo piscinas. Fin");
                 }
 
             }
@@ -228,40 +204,25 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         mApi.getSports(latitude, longitude, Constants.DISTANCE).enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
-                Log.d(TAG, "Antes de entrar en el arraylist de sports: " + response.body().results.toString());
-                Log.d(TAG, "tamaño " + String.valueOf(mSport.size()));
                 if (response != null && response.body() != null) {
-                    Log.d(TAG, "tamaño del array de piscinas: " + mPools.size());
                     mSport = (ArrayList<Pool>) response.body().results;
-                    Log.d(TAG, "tamaño de msports: " + mSport.size());
 
+                    //Para eliminar repetidos y no exponer información redundante
                     for (int i = 0; i < mSport.size(); i++) {
                         if (!mPools.contains(mSport.get(i))) {
                             temporal.add(mSport.get(i));
                         }
                     }
-
+                    //Para evitar un NullPointerException creamos un indefinido en caso de que esté vacío
                     if (temporal.size() == 0)
-                        temporal.add(new Pool("Undefined", new Location(0, 0)));
-                    Log.d(TAG, "el tamaño del array temporal es: " + temporal.size());
+                        temporal.add(new Pool(getString(R.string.undefined), new Location(0, 0)));
                     mSport = temporal;
                     Intent sendSports = new Intent(getApplicationContext(), ActivityViewAdapter.class);
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("LIST", mPools);
                     bundle.putParcelableArrayList("LIST2", mSport);
                     sendSports.putExtras(bundle);
-                    Log.d(TAG, "tamaño de mPools antes de ser enviado a ActivityViewerADAPTER: " + mPools.size());
                     startActivity(sendSports);
-                    Log.d(TAG, "array de centros deportivos. Inicio");
-                    for (Pool mPool : mSport) {
-                        Log.d(TAG, mPool.getName() == null ? "" : mPool.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
-                        Log.d(TAG, String.valueOf(mPool.getLocation().getLatitude() == 0 ? "" : mPool.getLocation().getLatitude()));
-                        Log.d(TAG, String.valueOf(mPool.getLocation().getLongitude() == 0 ? "" : mPool.getLocation().getLongitude()));
-                    }
-                    Log.d(TAG, "Parametros de salida: " + latitude + " " + longitude + " " + Constants.DISTANCE);
-                    Log.d(TAG, "array de centros deportivos. Fin");
-                } else {
-                    Log.d(TAG, "el response o el response body viene vacio bro");
                 }
             }
 
@@ -271,5 +232,4 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
             }
         });
     }
-
 }

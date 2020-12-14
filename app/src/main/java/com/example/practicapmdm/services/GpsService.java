@@ -40,8 +40,8 @@ public class GpsService extends Service implements LocationListener {
         Intent intent = new Intent(INTENT_LOCALIZATION_ACTION);
         intent.putExtra(LATITUDE, latitude);
         intent.putExtra(LONGITUDE, longitude);
-        Log.d(TAG, "GpsService latitude: " + String.valueOf(latitude));
-        Log.d(TAG, "GpsService longitude: " + String.valueOf(longitude));
+        Log.d(TAG, "GpsService latitude: " + latitude);
+        Log.d(TAG, "GpsService longitude: " + longitude);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
@@ -53,7 +53,7 @@ public class GpsService extends Service implements LocationListener {
     }
 
     @SuppressLint("MissingPermission")
-    private void startLocation () {
+    private void startLocation() {
         mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         boolean gpsProvider = mLocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean networkProvider = mLocManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -63,11 +63,11 @@ public class GpsService extends Service implements LocationListener {
             callGPSSettingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(callGPSSettingIntent);
         }
-        if(gpsProvider){
+        if (gpsProvider) {
             Log.d("d", "Service: provider enabled");
             mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 100, this);
         }
-        if (networkProvider){
+        if (networkProvider) {
             Log.d("d", "Service: network provider enabled");
             mLocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 100, this);
         }

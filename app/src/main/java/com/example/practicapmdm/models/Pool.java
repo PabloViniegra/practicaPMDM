@@ -8,7 +8,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Pool implements Parcelable, Serializable {
     @SerializedName("title")
@@ -27,7 +26,7 @@ public class Pool implements Parcelable, Serializable {
     }
 
 
-    public Pool (String name, Location location) {
+    public Pool(String name, Location location) {
         this.name = name;
         this.location = location;
     }
@@ -83,7 +82,6 @@ public class Pool implements Parcelable, Serializable {
     public void setLocation(Location location) {
         this.location = location;
     }
-
 
 
 }

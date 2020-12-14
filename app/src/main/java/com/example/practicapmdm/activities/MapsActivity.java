@@ -70,7 +70,7 @@ public class MapsActivity extends AppCompatActivity {
         mapController.setCenter(geoMyPosition);
     }
 
-    public void addMarker (GeoPoint center){
+    public void addMarker(GeoPoint center) {
         Marker marker = new Marker(mMap);
         marker.setPosition(center);
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);

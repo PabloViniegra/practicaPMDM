@@ -1,12 +1,10 @@
 package com.example.practicapmdm.impl;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.practicapmdm.R;
@@ -51,7 +49,7 @@ public class ViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) mcontext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView =layoutInflater.inflate(R.layout.views_of_pools, null);
+            convertView = layoutInflater.inflate(R.layout.views_of_pools, null);
         }
 
         TextView textView = convertView.findViewById(R.id.txtPool);

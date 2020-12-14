@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/activity_horizontal_margin"
     android:layout_gravity="center_horizontal"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:padding="50dp"
+    android:layout_margin="@dimen/activity_horizontal_margin"
     android:clickable="false"
     android:descendantFocusability="blocksDescendants"
     android:focusable="false"
-    android:focusableInTouchMode="false">
+    android:focusableInTouchMode="false"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="vertical"
+    android:padding="50dp">
+
     <TextView
         android:layout_width="90dp"
         android:layout_height="20dp"
+        android:layout_marginLeft="100dp"
         android:text="@string/typeSport"
-        android:textAlignment="center"
-        android:layout_marginLeft="100dp"/>
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/btnFav"
@@ -30,17 +31,17 @@
         android:focusableInTouchMode="false" />
 
     <TextView
+        android:id="@+id/txtSport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtSport"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:gravity="center"
-        android:textAlignment="center"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+        android:textAlignment="center" />
 
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/sports"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:src="@drawable/sports" />
 
 </LinearLayout>

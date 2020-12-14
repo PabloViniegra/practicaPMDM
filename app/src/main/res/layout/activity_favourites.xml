@@ -3,25 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.FavouritesActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activities.FavouritesActivity">
 
     <TextView
+        android:id="@+id/headFavourite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/headFavourite"
-        android:text="@string/header_favourite"
-        android:textAlignment="center"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:fontFamily="serif-monospace"
+        android:text="@string/header_favourite"
+        android:textAlignment="center"
         android:textColor="@color/colorBlack"
-        android:textFontWeight="@android:integer/config_longAnimTime"/>
+        android:textFontWeight="@android:integer/config_longAnimTime" />
 
     <ListView
+        android:id="@+id/myFavouritesList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:layout_marginTop="20dp"
-        android:id="@+id/myFavouritesList"/>
+        android:textAlignment="center" />
 
 </LinearLayout>

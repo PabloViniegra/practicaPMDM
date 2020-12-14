@@ -10,8 +10,8 @@ import com.example.practicapmdm.domain.JsonResponse;
 
 public interface ApiLocationMadridData {
     @Headers({"Accept: application/json"})
-    @GET(Constants.END_POINT )
-    Call <JsonResponse> getPools(@Query("latitud") Double latitude, @Query("longitud") Double longitude, @Query("distancia") int distance);
+    @GET(Constants.END_POINT)
+    Call<JsonResponse> getPools(@Query("latitud") Double latitude, @Query("longitud") Double longitude, @Query("distancia") int distance);
 
     @Headers({"Accept: application/json"})
     @GET(Constants.END_POINT_SPORT)

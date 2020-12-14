@@ -1,15 +1,14 @@
 package com.example.practicapmdm.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.practicapmdm.R;
 import com.example.practicapmdm.constants.Constants;
@@ -17,8 +16,6 @@ import com.example.practicapmdm.controllers.FileController;
 import com.example.practicapmdm.impl.FavouritesAdapter;
 import com.example.practicapmdm.models.Location;
 import com.example.practicapmdm.models.Pool;
-
-import java.util.ArrayList;
 
 import static com.example.practicapmdm.activities.InitHomeActivity.DESCRIPTION;
 import static com.example.practicapmdm.activities.InitHomeActivity.DESCRIPTION_KEY;
@@ -37,28 +34,16 @@ public class FavouritesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
-        Log.d(TAG, "Contenido del array de favoritos en FavouritesActivity.java:");
-        for (Pool favourite : Constants.favourites) {
-            Log.d(TAG, "Nombre: " + favourite.getName());
-            Log.d(TAG, "Latitud: " + favourite.getLocation().getLatitude());
-            Log.d(TAG, "Longitud: " + favourite.getLocation().getLongitude());
-            Log.d(TAG, "-----------------------------------------------");
-
-        }
         mFavouritesList = findViewById(R.id.myFavouritesList);
-        mFavouritesList.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
-            menu.add(0, 1, 0, "Quitar de favoritos");
-        });
-        mFavouritesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent locationIntent = new Intent(getApplicationContext(), MapsActivity.class);
-                locationIntent.putExtra(NAME, Constants.favourites.get(position).getName());
-                locationIntent.putExtra(DESCRIPTION_KEY, DESCRIPTION);
-                locationIntent.putExtra(LATITUDE, Constants.favourites.get(position).getLocation().getLatitude());
-                locationIntent.putExtra(LONGITUDE, Constants.favourites.get(position).getLocation().getLongitude());
-                startActivity(locationIntent);
-            }
+        mFavouritesList.setOnCreateContextMenuListener((menu, v, menuInfo) -> menu.add(0, 1, 0, R.string.quiteFavourites));
+
+        mFavouritesList.setOnItemClickListener((parent, view, position, id) -> {
+            Intent locationIntent = new Intent(getApplicationContext(), MapsActivity.class);
+            locationIntent.putExtra(NAME, Constants.favourites.get(position).getName());
+            locationIntent.putExtra(DESCRIPTION_KEY, DESCRIPTION);
+            locationIntent.putExtra(LATITUDE, Constants.favourites.get(position).getLocation().getLatitude());
+            locationIntent.putExtra(LONGITUDE, Constants.favourites.get(position).getLocation().getLongitude());
+            startActivity(locationIntent);
         });
         mAdapter = new FavouritesAdapter(getApplicationContext(), Constants.favourites);
         mFavouritesList.setAdapter(mAdapter);
@@ -76,8 +61,9 @@ public class FavouritesActivity extends AppCompatActivity {
                     Constants.favourites.remove(i);
                 }
             }
-            Log.d(TAG, "Contenido del Array de favoritos para borrar: " + Constants.favourites.toString());
             fileControllers.fileFavWriter(Constants.favourites, getApplicationContext());
+            Log.d(TAG, "Contenido del Array de favoritos después de haber borrado: " + Constants.favourites.toString());
+            //Para refrescar los cambios y mostrar la lista actualizada dinámicamente
             Intent refresh = new Intent(this, FavouritesActivity.class);
             startActivity(refresh);
             finish();

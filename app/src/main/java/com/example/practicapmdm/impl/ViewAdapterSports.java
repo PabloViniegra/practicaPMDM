@@ -47,7 +47,7 @@ public class ViewAdapterSports extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView =layoutInflater.inflate(R.layout.views_of_sports, null);
+            convertView = layoutInflater.inflate(R.layout.views_of_sports, null);
         }
 
         TextView textView = convertView.findViewById(R.id.txtSport);
