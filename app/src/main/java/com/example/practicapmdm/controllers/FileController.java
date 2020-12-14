@@ -11,7 +11,6 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.practicapmdm.R;
 import com.example.practicapmdm.activities.ActivityViewAdapter;
 import com.example.practicapmdm.models.Location;
 import com.example.practicapmdm.models.Pool;
@@ -38,7 +37,7 @@ public class FileController {
     public void fileFavWriter(ArrayList<Pool> pools, Context ctx) {
 
         ArrayList<Pool> arrayfileFavReader = new ArrayList<>();
-        arrayfileFavReader = fileFavReader();
+        arrayfileFavReader = fileFavReader(ctx);
         Pool poolAux;
         Log.d(TAG,"TAMAÑO DEL ARRAY AUXILIAR"+arrayfileFavReader.size());
         for (int i = 0; i < arrayfileFavReader.size(); i++) {
@@ -60,7 +59,6 @@ public class FileController {
                 fos.write((pools.get(i).getLocation().getLatitude() + "").getBytes());
                 fos.write(":".getBytes());
                 fos.write((pools.get(i).getLocation().getLongitude() + "").getBytes());
-                fos.write("\n".getBytes());
             }
             fos.close();
         } catch (IOException ex) {
@@ -73,13 +71,13 @@ public class FileController {
         }
     }
 
-    public ArrayList fileFavReader() {
+    public ArrayList fileFavReader(Context ctx) {
         ArrayList<Pool> arrayFav = new ArrayList();
         Pool pool;
         String name;
         Location location;
         File file = new File("favourites.txt");
-        Log.d(TAG, "entrando en la lectura del fichero");
+
       /*  try {
 
             BufferedReader br = new BufferedReader(new FileReader("favourites.txt"));
@@ -96,34 +94,26 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+        String FILENAME = "favourites.txt";
         FileInputStream fis;
-        InputStream is;
-        InputStreamReader isr;
-        BufferedReader br;
-        Log.d(TAG, "entrando en la lectura del fichero1");
-        try {
-            Log.d(TAG, "entrando en la lectura del fichero2");
-            fis = new FileInputStream(file);
 
-            Log.d(TAG, "entrando en la lectura del fichero3");
-            isr = new InputStreamReader(fis);
-            Log.d(TAG, "entrando en la lectura del fichero4");
-            br = new BufferedReader(isr);
-            Log.d(TAG, "entrando en la lectura del fichero5");
+        AssetManager am = ctx.getAssets();
+        try {
+            InputStream inputStream = am.open(FILENAME);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String linea;
-            while((linea = br.readLine()) != null) {
+            while ((linea = bufferedReader.readLine()) != null) {
                 String[] tokens = linea.split(":");
                 location = new Location(Double.parseDouble(tokens[1]), Double.parseDouble(tokens[2]));
                 pool = new Pool(tokens[0], location);
-                Log.d(TAG, "entrando en la lectura del fichero" + tokens[0] + " " + tokens[1] + " " + tokens[2]);
+                Log.d(TAG, "--------------------------------------------------" + tokens[0] + " " + tokens[1] + " " + tokens[2]);
                 arrayFav.add(pool);
             }
-            fis.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch(Exception e) {
-            System.out.println("Excepcion leyendo fichero "+ file + ": " + e);
-        }
-        Log.d(TAG, "saliendo de la lectura del documento");
         return arrayFav;
     }
 }
