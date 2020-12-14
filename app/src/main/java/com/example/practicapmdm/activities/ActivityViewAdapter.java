@@ -90,13 +90,14 @@ public class ActivityViewAdapter extends AppCompatActivity {
         });
         Log.d(TAG, "Antes del evento click en el list view");
         mViewList.setOnItemClickListener((parent, view, i, id) -> {
+            Log.d(TAG, "dentro del evento");
+            Toast.makeText(ActivityViewAdapter.this, "Click en el ListView", Toast.LENGTH_SHORT).show();
             Intent locationPoolIntent = new Intent(getApplicationContext(), MapsActivity.class);
             locationPoolIntent.putExtra(NAME, pools.get(i).getName());
             locationPoolIntent.putExtra(DESCRIPTION_KEY, DESCRIPTION);
             locationPoolIntent.putExtra(LATITUDE, pools.get(i).getLocation().getLatitude());
             locationPoolIntent.putExtra(LONGITUDE, pools.get(i).getLocation().getLongitude());
             poolclick = new Pool(pools.get(i).getName(), new Location(pools.get(i).getLocation().getLatitude(), pools.get(i).getLocation().getLongitude()));
-            Log.d(TAG, "poolclick: " + poolclick.toString());
             startActivity(locationPoolIntent);
 
         });
@@ -131,10 +132,11 @@ public class ActivityViewAdapter extends AppCompatActivity {
             locationSchoolIntent.putExtra(LONGITUDE, pools.get(info.position).getLocation().getLongitude());
             startActivity(locationSchoolIntent);
         } else if (item.getItemId() == 2 || item.getItemId() == 5) {
+            Log.d(TAG, "activado el botón del Like");
             fileControllers = new FileController();
             Log.d(TAG, "Contenido del Array de favoritos: " + favourites.toString());
 
-
+            InitHomeActivity.favourites.add(poolclick);
 
             int permissionCheckR = ContextCompat.checkSelfPermission(this
                     , Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -148,23 +150,23 @@ public class ActivityViewAdapter extends AppCompatActivity {
 
 
             poolclick = new Pool(pools.get(info.position).getName(), new Location(pools.get(info.position).getLocation().getLatitude(), pools.get(info.position).getLocation().getLongitude()));
-            Log.d(TAG, "poolclick: antes de entrar en favoritos: " + poolclick.toString());
-            Log.d(TAG, "favourites: tamaño: " + favourites.size());
+            Log.d(TAG,"poolclick: antes de entrar en favoritos: " + poolclick.toString());
+            Log.d(TAG,"favourites: tamaño: " + favourites.size());
 
-            int auxFavPoolClick = 0;
+            int auxFavPoolClick=0;
 
-            for (int i = 0; i < favourites.size(); i++) {
+            for (int i = 0; i <favourites.size() ; i++) {
 
-                if (!favourites.get(i).getName().equalsIgnoreCase(poolclick.getName())) {
-                    auxFavPoolClick = 1;
+                if(!favourites.get(i).getName().equalsIgnoreCase(poolclick.getName())){
+                    auxFavPoolClick=1;
                 }
-                Log.d(TAG, "auxFavPoolClickFav:" + favourites.get(i).getName());
-                Log.d(TAG, "auxFavPoolClickPoolClick:" + poolclick.getName());
-                Log.d(TAG, "auxFavPoolClick:" + auxFavPoolClick);
+                Log.d(TAG,"auxFavPoolClickFav:"+favourites.get(i).getName() );
+                Log.d(TAG,"auxFavPoolClickPoolClick:"+poolclick.getName());
+                Log.d(TAG,"auxFavPoolClick:"+auxFavPoolClick );
             }
 
 
-            if (auxFavPoolClick == 0) {
+            if (auxFavPoolClick==0) {
                 InitHomeActivity.favourites.add(poolclick);
 
                 int permissionCheckW = ContextCompat.checkSelfPermission(this
@@ -188,8 +190,13 @@ public class ActivityViewAdapter extends AppCompatActivity {
                     favourites.remove(i);
                 }
             }
+
+
+
             fileControllers.fileFavWriter(favourites, getApplicationContext());
             Log.d(TAG, "Contenido del Array de favoritos para borrar: " + favourites.toString());
+
+
         }
         return true;
     }

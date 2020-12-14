@@ -104,18 +104,6 @@ public class InitHomeActivity extends AppCompatActivity implements NavigationVie
         Log.d(TAG, "Longitude " + String.valueOf(longitudeReceive));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "Array de favoritos en el onResume: " + favourites.toString());
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "Array de favoritos en el onRestart: " + favourites.toString());
-    }
-
     private void raiseFavoriteFileIntoArray() {
         fileControllers = new FileController();
         favourites = fileControllers.fileFavReader();
