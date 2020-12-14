@@ -2,6 +2,10 @@ package com.example.practicapmdm.constants;
 
 import android.widget.Button;
 
+import com.example.practicapmdm.models.Pool;
+
+import java.util.ArrayList;
+
 public class Constants {
     public static final String TAG = Constants.class.getName();
     public static final String IO_ERROR = "Ha ocurrido un error de tipo IOException";
@@ -11,6 +15,8 @@ public class Constants {
     public static final String NAME = "NAME";
     public static final String INTENT_LOCALIZATION_ACTION = "location-event-position";
     public static final int DISTANCE = 8000;
+    public static ArrayList<Pool> favourites = new ArrayList<>();
+    public static final String FILENAME = "favourites.txt";
 
     //API REST METHODS
     public static final String HEADER_URL = "https://datos.madrid.es/egob/";
